@@ -26,7 +26,7 @@
 
       parameter (ngauss = 3)
       dimension q1d(1-mbc:maxnx+mbc,meqn)
-      dimension q_gauss(1-mbc:maxm+mbc,meqn,ngauss)
+      dimension q_gauss(1-mbc:maxnx+mbc,meqn,ngauss)
       dimension w(ngauss,ngauss,ngauss), w5(5,ngauss)
 
       epweno = 1.e-36
