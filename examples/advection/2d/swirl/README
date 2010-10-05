@@ -1,0 +1,32 @@
+
+claw/extensions/wenoclaw/2d/examples/advection/swirl
+
+Swirling flow in a box
+
+Edge velocities are stored in aux array (see setaux.f) with
+velocity specified by differencing the streamfunction psi.f
+
+The velocities are time-dependent giving reversing flow.  These
+velocities are computed in b4step2.f.   The period is specified
+by the parameter tperiod in setprob.data.   
+
+In theory the solution should agree with the initial data at times 
+t = N*tperiod/2 for all integers N, but because of the numerical 
+diffusion this won't happen.
+
+As a special case, if tperiod = 0, then 
+the velocities are constant in time and b4step2 does nothing.
+The velocities specified in setaux.f are then used at all times.
+
+This test problem was used in:
+
+@article{rjl:advect,
+  author="R. J. LeVeque",
+  title="High-resolution conservative algorithms for advection in
+  incompressible flow",
+  journal="SIAM J. Numer. Anal.",
+  volume="33",
+  year="1996",
+  pages="627-665"
+}
+

@@ -1,0 +1,9 @@
+
+claw/extensions/wenoclaw/1d/advection
+
+Advection at constant velocity with periodic boundary conditions.
+The velocity is specified in setprob.data
+
+The initial data consists of a Gaussian pulse with variance given by the
+parameter beta set in setprob.data.
+
