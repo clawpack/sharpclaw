@@ -5,11 +5,11 @@
 ########################################################
 
 1                         =: ndim         (number of dimensions)
-7200                      =: mx           (cells in x direction)
+14400                     =: mx           (cells in x direction)
 
-50                        =: nout         (number of output times)
+60                        =: nout         (number of output times)
 1                         =: outstyle     (style of specifying output times)
-500                       =: tfinal       (final time)
+1200.0                    =: tfinal       (final time)
 
 0.025000000000000001      =: dt_initial   (initial time step dt)
 9.9999999999999997e+98    =: dt_max       (max allowable dt)

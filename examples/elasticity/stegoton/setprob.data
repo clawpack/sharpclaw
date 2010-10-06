@@ -11,4 +11,4 @@
 4.0                       =: K_B          bulk modulus in B-layers
 1.0                       =: rho_A        density in A-layers
 4.0                       =: rho_B        density in B-layers
-600                       =: trtime       time-reversal time
+600.0                     =: trtime       time-reversal time

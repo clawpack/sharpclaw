@@ -36,6 +36,7 @@ CLAW_SOURCES = \
   setaux.f \
   bc1.f \
   out1nel.f \
+  b4step1.f \
   setprob.f 
 
 
@@ -55,7 +56,6 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/polyrecon.f95 \
   $(CLAW_LIB)/weno.f95 \
   $(CLAW_LIB)/tvd.f95 \
-  $(CLAW_LIB)/b4step.f95 \
   $(CLAW_LIB)/1d/src1.f95 \
   $(CLAW_LIB)/evec.f95 \
   $(CLAW_LIB)/opendatafile.f
