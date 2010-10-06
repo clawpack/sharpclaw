@@ -1,0 +1,114 @@
+#
+#               Makefile for the lib code:
+#
+#       To make an executable, type:            make xclaw
+#       (from the application sub-directory)
+#
+#       To compile a single file.f type:          make file.o
+#       (from the application sub-directory)
+#
+#       To compile the lib library files type:    make claw1
+#       (from the claw/clawpack/1d/lib sub-directory)
+#
+#       To combine all source files type:         make program
+#       (from the application sub-directory)
+#       (sometimes easier to debug all in one)
+
+#
+#
+.SUFFIXES: .f .f95 .o .mod .F
+FFLAGS = -O
+LFLAGS = $(FFLAGS)
+GFORT = /usr/local/bin/gfortran
+F95 = $(GFORT) -c 
+F77    = f77 -c
+LINK = $(GFORT)
+HDFLIBS = -L/usr/local/hdf/lib -lmfhdf -ldf -ljpeg -lz
+
+.f95.o: ; $(F95) $(FFLAGS) $*.f95 -o $*.o 
+.f.o: ; $(F95) $(FFLAGS) $*.f -o $*.o
+
+OBJECTS = \
+  qinit.o \
+  rp1nel.o \
+  setaux.o \
+  bc1.o \
+  out1nel.o \
+  b4step1.o \
+  tfluct1.o \
+  setprob.o 
+
+LIBOBJECTS = \
+  $(SCLAW)/lib/Global1.o \
+  $(SCLAW)/lib/ClawData.o \
+  $(SCLAW)/lib/main.o \
+  $(SCLAW)/lib/sharpclaw.o \
+  $(SCLAW)/lib/qalloc1.o \
+  $(SCLAW)/lib/copyq1.o \
+  $(SCLAW)/lib/step.o \
+  $(SCLAW)/lib/step1.o \
+  $(SCLAW)/lib/step2.o \
+  $(SCLAW)/lib/fdrecon.o \
+  $(SCLAW)/lib/fdrecon_wave.o \
+  $(SCLAW)/lib/weno5.o \
+  $(SCLAW)/lib/weno5_wave.o \
+  $(SCLAW)/lib/weno5_char.o \
+  $(SCLAW)/lib/weno5_trans.o \
+  $(SCLAW)/lib/tvd2_char.o \
+  $(SCLAW)/lib/tvd2.o \
+  $(SCLAW)/lib/tvd2_wave.o \
+  $(SCLAW)/lib/evec.o \
+  $(SCLAW)/lib/src1.o 
+
+SOURCES = \
+  qinit.f \
+  rp1nel.f \
+  setaux.f \
+  bc1.f \
+  out1nel.f \
+  b4step1.f \
+  tfluct1.f \
+  setprob.f 
+
+LIBOBJECTS = \
+  $(SCLAW)/lib/Global1.f95 \
+  $(SCLAW)/lib/ClawData.f95 \
+  $(SCLAW)/lib/main.f95 \
+  $(SCLAW)/lib/sharpclaw.f95 \
+  $(SCLAW)/lib/qalloc1.f95 \
+  $(SCLAW)/lib/copyq1.f95 \
+  $(SCLAW)/lib/step.f95 \
+  $(SCLAW)/lib/step1.f95 \
+  $(SCLAW)/lib/step2.f95 \
+  $(SCLAW)/lib/fdrecon.f95 \
+  $(SCLAW)/lib/fdrecon_wave.f95 \
+  $(SCLAW)/lib/weno5.f95 \
+  $(SCLAW)/lib/weno5_wave.f95 \
+  $(SCLAW)/lib/weno5_char.f95 \
+  $(SCLAW)/lib/weno5_trans.f95 \
+  $(SCLAW)/lib/tvd2_char.f95 \
+  $(SCLAW)/lib/tvd2.f95 \
+  $(SCLAW)/lib/tvd2_wave.f95 \
+  $(SCLAW)/lib/evec.f95 \
+  $(SCLAW)/lib/src1.f95 
+
+OUTOBJECTS = \
+  $(SCLAW)/lib/out2.o
+
+OUTSOURCES = \
+  $(SCLAW)/lib/out2.f95
+
+xsclaw: $(OBJECTS) $(LIBOBJECTS)
+	$(LINK) $(LFLAGS) $(OBJECTS) $(LIBOBJECTS) $(OUTOBJECTS) -o xsclaw
+
+xsclawhdf: $(OBJECTS) 
+	$(LINK) $(LFLAGS) $(OBJECTS) $(LIBOBJECTS) $(HDFOBJECTS) $(HDFLIBS) \
+	-o xsclaw
+
+program : $(SOURCES) $(OUTSOURCES)
+	cat $(SOURCES) $(OUTSOURCES) > sclaw1program.f95
+
+programhdf : $(SOURCES) $(HDFSOURCES)
+	cat $(SOURCES) $(HDFSOURCES) > sclaw1program.f95
+
+### DO NOT remove this line - make depends on it ###
