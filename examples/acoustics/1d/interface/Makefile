@@ -30,10 +30,11 @@ FFLAGS = -O3
 
     
 CLAW_SOURCES = \
-  qinit.f90 \
-  rp1.f \
-  tfluct1.f \
+  qinit.f \
+  rp1acv.f \
+  tfluct1acv.f \
   evec.f \
+  setaux.f \
   setprob.f 
 
 
@@ -54,7 +55,6 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/weno.f90 \
   $(CLAW_LIB)/tvd.f90 \
   $(CLAW_LIB)/1d/bc1.f90 \
-  $(CLAW_LIB)/setaux.f90 \
   $(CLAW_LIB)/b4step.f90 \
   $(CLAW_LIB)/1d/src1.f90 \
   $(CLAW_LIB)/1d/out1.f90 \

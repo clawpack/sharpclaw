@@ -1,0 +1,2 @@
+Implement left eigenvectors in evec.f and see whether oscillations
+are avoided by using characteristic decomposition.

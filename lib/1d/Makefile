@@ -11,7 +11,7 @@
 #       output in HDF (version 4) format, type:   make xwclawhdf
 #       (from the application sub-directory)
 #
-#	To compile a single file.f95 type:	  make file.o
+#	To compile a single file.f90 type:	  make file.o
 #
 #	To combine all source files type:	  make program
 #       (from the application sub-directory)
@@ -21,7 +21,7 @@
 #       (date is appended)
 #
 .SUFFIXES:
-.SUFFIXES: .f .f95 .o .mod .F .f95
+.SUFFIXES: .f .f90 .o .mod .F .f90
 GFORT = gfortran
 FFLAGS = -O 
 LFLAGS = 
@@ -29,8 +29,8 @@ F77 = gfortran -c
 F95 = $(GFORT) -c
 LINK	= $(GFORT)
 
-.f95.o: ; $(F95) $(FFLAGS) $*.f95 -o $*.o 
-.f95.mod: ; $(F95) $(FFLAGS) $*.f95 -o $*.o 
+.f90.o: ; $(F95) $(FFLAGS) $*.f90 -o $*.o 
+.f90.mod: ; $(F95) $(FFLAGS) $*.f90 -o $*.o 
 
 LIB1DOBJECTS = \
   Global1.o\
@@ -56,27 +56,27 @@ LIB1DOBJECTS = \
   out1_hdf.o
 
 SOURCES = \
-  Global1.f95\
-  ../ClawParams.f95\
-  ../ClawData.f95\
-  ../main.f95\
-  ../sharpclaw.f95 \
-  ../step.f95 \
-  ../step1.f95 \
-  ../polyrecon.f95\
-  ../weno.f95\
-  ../tvd.f95\
-  ../setprob.f95 \
-  ../setaux.f95 \
-  ../b4step.f95 \
-  ../evec.f95 \
-  ../tfluct.f95 \
-  ../step2.f95 \
-  qalloc1.f95 \
-  bc1.f95 \
-  src1.f95 \
-  out1.f95 \
-  out1_hdf.f95 
+  Global1.f90\
+  ../ClawParams.f90\
+  ../ClawData.f90\
+  ../main.f90\
+  ../sharpclaw.f90 \
+  ../step.f90 \
+  ../step1.f90 \
+  ../polyrecon.f90\
+  ../weno.f90\
+  ../tvd.f90\
+  ../setprob.f90 \
+  ../setaux.f90 \
+  ../b4step.f90 \
+  ../evec.f90 \
+  ../tfluct.f90 \
+  ../step2.f90 \
+  qalloc1.f90 \
+  bc1.f90 \
+  src1.f90 \
+  out1.f90 \
+  out1_hdf.f90 
 
 lib1d: $(LIB1DOBJECTS)
 

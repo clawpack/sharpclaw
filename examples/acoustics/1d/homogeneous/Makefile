@@ -30,9 +30,9 @@ FFLAGS = -O3
 
     
 CLAW_SOURCES = \
-  qinit.f90 \
+  qinit.f \
   rp1.f \
-  tfluct1.f \
+  tfluct.f \
   evec.f \
   setprob.f 
 
