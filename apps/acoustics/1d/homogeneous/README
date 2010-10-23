@@ -1,0 +1,9 @@
+
+claw/extensions/wenoclaw/1d/acoustics
+
+Acoustics equations with pressure pulse initial conditions,
+solid wall at x=0, outflow at x=1.
+
+The density and bulk modulus are specified in setprob.data
+
+

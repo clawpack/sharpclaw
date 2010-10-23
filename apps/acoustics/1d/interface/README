@@ -1,0 +1,10 @@
+
+claw/extensions/wenoclaw/1d/acoustics_interface
+
+Piecewise constant medium with a single interface as specified in setaux.f
+  with parameters in setprob.data
+
+different sets of initial conditions are specified in qinit.f
+  and chosen in setprob.data
+
+Note the reflection and transmission at the interface
