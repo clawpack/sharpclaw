@@ -47,6 +47,7 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/1d/Global1.f90 \
   $(CLAW_LIB)/ClawData.f90 \
   $(CLAW_LIB)/ClawParams.f90 \
+  $(CLAW_LIB)/reconstruct.f90 \
   $(CLAW_LIB)/main.f90 \
   $(CLAW_LIB)/sharpclaw.f90 \
   $(CLAW_LIB)/1d/qalloc1.f90 \
@@ -54,8 +55,6 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/step1.f90 \
   $(CLAW_LIB)/step2.f90 \
   $(CLAW_LIB)/polyrecon.f90 \
-  $(CLAW_LIB)/weno.f90 \
-  $(CLAW_LIB)/tvd.f90 \
   $(CLAW_LIB)/1d/src1.f90 \
   $(CLAW_LIB)/evec.f90 \
   $(CLAW_LIB)/opendatafile.f

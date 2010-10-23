@@ -30,6 +30,7 @@ subroutine step1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 
     USE ClawData
     use ClawParams
+    USE reconstruct
 
     implicit double precision (a-h,o-z)
 
@@ -68,35 +69,35 @@ subroutine step1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
         select case(char_decomp)
             case(0)
                 ! Fill in TVD reconstruction w/o char. decomp. here
-                call tvd2(q1d,g,mx)
+                call tvd2(q1d,g%ql,g%qr,mthlim)
             case(1)
                 ! wave-based second order reconstruction
                 call rp(ixy,maxnx,meqn,mwaves,mbc,mx,&
                         q1d,q1d,aux,aux,g%wave,g%s,g%amdq,g%apdq)
-                call tvd2_wave(q1d,g,mx)
+                call tvd2_wave(q1d,g%ql,g%qr,g%wave,g%s,mthlim)
             case(2)
                 ! characteristic-wise second order reconstruction
                 call evec(mx,meqn,mbc,mx,q1d,aux,aux,g%evl,g%evr)
-                call tvd2_char(q1d,g,mx)
+                call tvd2_char(q1d,g%ql,g%qr,mthlim,g%evl,g%evr)
         end select
         case(2)
         select case (char_decomp)
             case (0)
                 ! no characteristic decomposition
-                call weno5(q1d,g,mx)
+                call weno5(q1d,g%ql,g%qr)
             case (1)
                 ! wave-based reconstruction
                 call rp(ixy,maxnx,meqn,mwaves,mbc,mx,&
                         q1d,q1d,aux,aux,g%wave,g%s,g%amdq,g%apdq)
-                call weno5_wave(q1d,g%ql,g%qr,g%wave,g%s,mx)
+                call weno5_wave(q1d,g%ql,g%qr,g%wave)
             case (2)
                 ! characteristic-wise reconstruction
                 call evec(mx,meqn,mbc,mx,q1d,aux,aux,g%evl,g%evr)
-                call weno5_char(q1d,g,mx)
+                call weno5_char(q1d,g%ql,g%qr,g%evl,g%evr)
             case (3)
                 ! transmission-based reconstruction
                 call evec(mx,meqn,mbc,mx,q1d,aux,aux,g%evl,g%evr)
-                call weno5_trans(q1d,g,mx)
+                call weno5_trans(q1d,g%ql,g%qr,g%evl,g%evr)
             case default
                 write(*,*) 'ERROR: Unrecognized characteristic decomposition &
                             option'

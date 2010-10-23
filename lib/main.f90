@@ -15,6 +15,7 @@ program sharpclaw_main
     USE ClawData
     USE ClawParams
     use Global
+    use reconstruct
     implicit none
     external bc,tfluct,rp,src,b4step
     
@@ -51,6 +52,8 @@ program sharpclaw_main
     do md=1,ndim
       read(55,*) nx(md)
     end do
+
+    maxnx=maxval(nx)
 
     ! i/o variables
     read(55,*) nout
@@ -113,6 +116,11 @@ program sharpclaw_main
     ! Allocate q and aux
     call qalloc(mbc,nx,meqn,maux,r1,r2,time_integrator)
 
+    ! Work array allocations
+    ! all should eventually be here once the arrays are moved into modules
+    call alloc_recon_workspace(maxnx,mbc,meqn,mwaves,lim_type,char_decomp)
+
+
     if ((mthbc(1).eq.2 .and. mthbc(2).ne.2) .or. &
         (mthbc(2).eq.2 .and. mthbc(1).ne.2)) then
         write(6,*) '*** ERROR ***  periodic boundary conditions'
@@ -149,7 +157,7 @@ program sharpclaw_main
     call output(meqn,mbc,nx,xlower,dx,q,t0,0,aux,maux)
     write(6,601) 0, t0
 
-    open(10,file='fort.info',status='unknown',form='formatted')
+        open(10,file='fort.info',status='unknown',form='formatted')
     ! =================================================================
     ! Main loop
     ! =================================================================
@@ -240,4 +248,8 @@ program sharpclaw_main
     if (time_integrator==4) then
         deallocate(r2%qrk)
     endif
+
+    call dealloc_recon_workspace(lim_type,char_decomp)
+
+
 end program sharpclaw_main

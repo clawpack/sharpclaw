@@ -15,6 +15,7 @@ subroutine sharpclaw(tstart,tend,cfl_maxused,cfl_last,dt_minused, &
     type(griddat) gdat
     type(rkreg) r1,r2
     
+    double precision :: gp
     double precision :: tstart,tend,cflmax,cfl
     double precision :: dtmax,dtmin,dt,t,told
     integer :: info,maxn,n,stat
@@ -91,35 +92,6 @@ subroutine sharpclaw(tstart,tend,cfl_maxused,cfl_last,dt_minused, &
         allocate( gdat%auxr(1-mbc:maxnx+mbc,maux) )
     endif
 
-    !Allocate extra arrays for reconstruction
-    select case(lim_type)
-        case(1)
-        select case(char_decomp)
-            case(1) ! Storage for tvd2_wave()
-                allocate(gdat%uu(1-mbc:maxnx+mbc,mwaves))
-            case(2) ! Storage for tvd2_char()
-                allocate(gdat%dq(1-mbc:maxnx+mbc,meqn))
-                allocate( gdat%u(1-mbc:maxnx+mbc,meqn,2))
-                allocate(gdat%hh(1-mbc:maxnx+mbc,-1:1))
-        end select
-        case(2)
-        select case(char_decomp)
-            case(0)
-                allocate(gdat%uu(1-mbc:maxnx+mbc,2))
-                allocate( gdat%dq1m(1-mbc:maxnx+mbc))
-            case(2) ! Storage for weno5_char
-                allocate(gdat%dq(1-mbc:maxnx+mbc,meqn))
-                allocate(gdat%uu(1-mbc:maxnx+mbc,2))
-                allocate(gdat%hh(1-mbc:maxnx+mbc,-2:2))
-            case(3) ! Storage for weno5_trans
-                allocate(gdat%dq(1-mbc:maxnx+mbc,meqn))
-                allocate(gdat%gg(1-mbc:maxnx+mbc,meqn))
-                allocate( gdat%u(1-mbc:maxnx+mbc,meqn,2))
-                allocate(gdat%hh(1-mbc:maxnx+mbc,-2:2))
-                allocate(gdat%uh(1-mbc:maxnx+mbc,meqn,2))
-        end select
-    end select
-
     ! Allocate extra arrays needed in 2D
     if (ndim>1) then
         allocate(gdat%q1d(1-mbc:maxnx+mbc,meqn))
@@ -132,6 +104,72 @@ subroutine sharpclaw(tstart,tend,cfl_maxused,cfl_last,dt_minused, &
             allocate(gdat%hff(1-mbc:maxnx+mbc,meqn,3))
             allocate(gdat%uhh(1-mbc:maxnx+mbc,meqn,2,3))
             allocate(gdat%ugg(1-mbc:maxnx+mbc,meqn,2,3))
+
+            allocate(gdat%qgauss(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn,3))
+            allocate(gdat%q1dgauss(1-mbc:maxnx+mbc,meqn,3))
+            allocate(gdat%qlgauss(1-mbc:maxnx+mbc,meqn,3))
+            allocate(gdat%qrgauss(1-mbc:maxnx+mbc,meqn,3))
+
+            !Gauss quadrature weights
+            !This should be put in a subroutine and generalized
+            !for different quadrature choices
+            gp = dsqrt(0.6d0)
+
+            !Correspondence to Yulong Xing's code:
+            !w(1,*,*) = wa(*,*)
+            !w(2,*,*) = wb(*,*)
+            !w(3,*,*) = wc(*,*)
+
+            gdat%w(1,1,1) = 1./30. - gp/4.
+            gdat%w(1,1,2) = -1./15. + gp
+            gdat%w(1,1,3) = 31./30. - 3.*gp/4.
+            gdat%w(1,2,1) = 1./30. + gp/4.
+            gdat%w(1,2,2) = 14./15.
+            gdat%w(1,2,3) = 1./30. - gp/4. 
+            gdat%w(1,3,1) = 31./30. + 3.*gp/4.
+            gdat%w(1,3,2) = -1./15. - gp 
+            gdat%w(1,3,3) = 1./30. + gp/4.
+            
+            gdat%w(2,1,1) = -1./24.
+            gdat%w(2,1,2) = 1./12.
+            gdat%w(2,1,3) = 23./24.
+            gdat%w(2,2,1) = -1./24.
+            gdat%w(2,2,2) = 13/12.
+            gdat%w(2,2,3) = -1./24.
+            gdat%w(2,3,1) = 23./24.
+            gdat%w(2,3,2) = 1./12.
+            gdat%w(2,3,3) = -1./24.
+            
+            gdat%w(3,1,1) = 1./30. + gp/4. 
+            gdat%w(3,1,2) = -1./15. - gp 
+            gdat%w(3,1,3) = 31./30. + 3.*gp/4.
+            gdat%w(3,2,1) = 1./30. - gp/4. 
+            gdat%w(3,2,2) = 14./15.
+            gdat%w(3,2,3) = 1./30. + gp/4. 
+            gdat%w(3,3,1) = 31./30. - 3.*gp/4.
+            gdat%w(3,3,2) = -1./15. + gp
+            gdat%w(3,3,3) = 1./30. - gp/4.
+            
+            !for point -sqrt(3/5)
+            gdat%w5(1,1) = -11./240.*gp - 3./800.
+            gdat%w5(2,1) = 41./120.*gp+29./600.
+            gdat%w5(3,1) = 1093./1200.
+            gdat%w5(4,1) = -41./120.*gp+29./600.
+            gdat%w5(5,1) = 11./240.*gp - 3./800.
+            !for point 0
+            gdat%w5(1,2) = 3./640.
+            gdat%w5(2,2) = -29./480.
+            gdat%w5(3,2) = 1067./960.
+            gdat%w5(4,2) = -29./480.
+            gdat%w5(5,2) = 3./640.
+            !for point sqrt(3/5)
+            gdat%w5(1,3) = 11./240.*gp - 3./800.
+            gdat%w5(2,3) = -41./120.*gp+29./600.
+            gdat%w5(3,3) = 1093./1200.
+            gdat%w5(4,3) = 41./120.*gp+29./600.
+            gdat%w5(5,3) = -11./240.*gp - 3./800.
+
+
         endif
     endif
 
@@ -199,6 +237,7 @@ subroutine sharpclaw(tstart,tend,cfl_maxused,cfl_last,dt_minused, &
                 stop
         end select
 
+
         if (verbosity == 1) write(6,601) n,cfl,dt,t
   601   format('SClaw... Step',i4, &
                          '   Courant number =',f6.3,'  dt =',d12.4, &
@@ -263,24 +302,6 @@ subroutine sharpclaw(tstart,tend,cfl_maxused,cfl_last,dt_minused, &
     if (tfluct_solver==0) then
         deallocate(gdat%auxl,gdat%auxr)
     endif
-
-    !Deallocate extra arrays for reconstruction
-    select case(lim_type)
-        case(1)
-        select case(char_decomp)
-            case(1) ! Storage for tvd2_wave()
-                deallocate(gdat%uu)
-            case(2) ! Storage for tvd2_char()
-                deallocate(gdat%dq,gdat%u,gdat%hh)
-        end select
-        case(2)
-        select case(char_decomp)
-            case(2) ! Storage for weno5_char
-                deallocate(gdat%dq,gdat%uu,gdat%hh)
-            case(3) ! Storage for weno5_trans
-                deallocate(gdat%dq,gdat%gg,gdat%u,gdat%hh,gdat%uh)
-        end select
-    end select
 
 end subroutine sharpclaw
 

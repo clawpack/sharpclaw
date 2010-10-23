@@ -5,16 +5,16 @@
 ########################################################
 
 1                         =: ndim         (number of dimensions)
-100                       =: mx           (cells in x direction)
+200                       =: mx           (cells in x direction)
 
 10                        =: nout         (number of output times)
 1                         =: outstyle     (style of specifying output times)
-1.0                       =: tfinal       (final time)
+8.0                       =: tfinal       (final time)
 
 0.025000000000000001      =: dt_initial   (initial time step dt)
 9.9999999999999997e+98    =: dt_max       (max allowable dt)
-3.0                       =: cfl_max      (max allowable Courant number)
-2.9500000000000002        =: cfl_desired  (desired Courant number)
+2.8999999999999999        =: cfl_max      (max allowable Courant number)
+2.8500000000000001        =: cfl_desired  (desired Courant number)
 50000                     =: max_steps    (max time steps per call to claw)
 
 1                         =: dt_variable  (1 for variable dt, 0 for fixed)
@@ -22,18 +22,18 @@
 0                         =: verbosity    (verbosity of output)
 0                         =: src_term     (source term present)
 0                         =: mcapa        (aux index for capacity fcn)
-0                         =: maux         (number of aux variables)
+2                         =: maux         (number of aux variables)
 1                         =: tfluct_solver (total fluctuation solver)
-0                         =: char_decomp  (characteristic decomposition)
+1                         =: char_decomp  (characteristic decomposition)
 
-1                         =: meqn         (number of equations)
-1                         =: mwaves       (number of waves)
+2                         =: meqn         (number of equations)
+2                         =: mwaves       (number of waves)
 1                         =: lim_type     (0=None, 1=TVD, 2=WENO)
-5                         =: mthlim       (limiter choice for each wave)
+2 2                       =: mthlim       (limiter choice for each wave)
 
 0.0                       =: t0           (initial time)
-0.0                       =: xlower       (xlower)
-1.0                       =: xupper       (xupper)
+-10.0                     =: xlower       (xlower)
+10.0                      =: xupper       (xupper)
 
 3                         =: mbc          (number of ghost cells)
 2                         =: mthbc_xlower (type of BC at xlower)

@@ -22,6 +22,9 @@ c      are available
 c very inefficiently coded for now due to adaptation from the
 c version with char. decomp.
 
+      use ClawData
+      use ClawParams
+
       implicit double precision (a-h,o-z)
 
       parameter (ngauss = 3)

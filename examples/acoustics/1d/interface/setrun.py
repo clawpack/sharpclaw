@@ -35,7 +35,13 @@ def setrun(claw_pkg='sharpclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('tperiod',   0.0,  'Time period')
+    probdata.add_param('ic',   9,  'IC')
+    probdata.add_param('a',    1.0,  'Pulse half-width')
+    probdata.add_param('x0',   -4.0,  'Pulse center')
+    probdata.add_param('ninter',   1,  '# of interfaces')
+    probdata.add_param('interface',   0.0,  'interface locations')
+    probdata.add_param('rho',   [1.0,4.0],  'Densities')
+    probdata.add_param('c',   [1.0,0.5],   'Sound speeds')
 
     
     #------------------------------------------------------------------
@@ -49,17 +55,14 @@ def setrun(claw_pkg='sharpclaw'):
     # ---------------
 
     # Number of space dimensions:
-    clawdata.ndim = 2
+    clawdata.ndim = 1
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = 0.0
-    clawdata.xupper = 1.0
-    clawdata.ylower = 0.0
-    clawdata.yupper = 1.0
+    clawdata.xlower = -10.0
+    clawdata.xupper =  10.0
 
     # Number of grid cells:
     clawdata.mx = 200
-    clawdata.my = 200
     
     
 
@@ -68,7 +71,7 @@ def setrun(claw_pkg='sharpclaw'):
     # ---------------
 
     # Number of equations in the system:
-    clawdata.meqn = 1
+    clawdata.meqn = 2
 
     # Number of auxiliary variables in the aux array (initialized in setaux)
     clawdata.maux = 2
@@ -98,7 +101,7 @@ def setrun(claw_pkg='sharpclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 10
-        clawdata.tfinal = 10.
+        clawdata.tfinal = 8.0
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
@@ -123,6 +126,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.verbosity = 0
     
     
+
     # --------------
     # Time stepping:
     # --------------
@@ -140,8 +144,8 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 2.45
-    clawdata.cfl_max = 2.5
+    clawdata.cfl_desired = 2.85
+    clawdata.cfl_max = 2.9
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 50000
@@ -157,30 +161,30 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.time_integrator = 4
     
     # Number of waves in the Riemann solution:
-    clawdata.mwaves = 1
+    clawdata.mwaves = 2
     
     # List of limiters to use for each wave family:  
     # Required:  len(mthlim) == mwaves
-    clawdata.mthlim = [5]
+    clawdata.mthlim = [2,2]
     
-    # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 2
-
     #User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 0
+    clawdata.tfluct_solver = 1
 
     #Use characteristic decomposition in reconstruction step?
-    clawdata.char_decomp = 0
+    clawdata.char_decomp = 1
 
     # Source terms?
     clawdata.src_term = 0
     
     
+    # Limiter type: 0=None, 1=TVD, 2=WENO
+    clawdata.lim_type = 1
+
     # --------------------
     # Boundary conditions:
     # --------------------
 
-    # Number of ghost cells (usually 2)
+    # Number of ghost cells (usually 3)
     clawdata.mbc = 3
     
     # Choice of BCs at xlower and xupper:
@@ -189,10 +193,8 @@ def setrun(claw_pkg='sharpclaw'):
     #   2 => periodic (must specify this at both boundaries)
     #   3 => solid wall for systems where q(2) is normal velocity
     
-    clawdata.mthbc_xlower = 1
-    clawdata.mthbc_xupper = 1
-    clawdata.mthbc_ylower = 1
-    clawdata.mthbc_yupper = 1
+    clawdata.mthbc_xlower = 2
+    clawdata.mthbc_xupper = 2
     
     return rundata
     # end of function setrun

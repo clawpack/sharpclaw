@@ -36,13 +36,12 @@ LIB1DOBJECTS = \
   Global1.o\
   ../ClawParams.o\
   ../ClawData.o\
+  ../reconstruct.o\
   ../main.o\
   ../sharpclaw.o \
   ../step.o \
   ../step1.o \
   ../polyrecon.o\
-  ../weno.o\
-  ../tvd.o\
   ../setprob.o \
   ../setaux.o \
   ../b4step.o \
@@ -59,13 +58,12 @@ SOURCES = \
   Global1.f90\
   ../ClawParams.f90\
   ../ClawData.f90\
+  ../reconstruct.o\
   ../main.f90\
   ../sharpclaw.f90 \
   ../step.f90 \
   ../step1.f90 \
   ../polyrecon.f90\
-  ../weno.f90\
-  ../tvd.f90\
   ../setprob.f90 \
   ../setaux.f90 \
   ../b4step.f90 \

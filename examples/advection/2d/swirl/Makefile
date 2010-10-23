@@ -30,7 +30,7 @@ FFLAGS = -O3
 
     
 CLAW_SOURCES = \
-  qinit.f95 \
+  qinit.f90 \
   rpn2ad1.f \
   setaux.f \
   psi.f \
@@ -42,21 +42,20 @@ CLAW_SOURCES = \
 CLAW_LIB = $(SCLAW)/lib
     
 CLAW_LIBSOURCES = \
-  $(CLAW_LIB)/2d/Global2.f95 \
-  $(CLAW_LIB)/ClawData.f95 \
-  $(CLAW_LIB)/ClawParams.f95 \
-  $(CLAW_LIB)/main.f95 \
-  $(CLAW_LIB)/sharpclaw.f95 \
-  $(CLAW_LIB)/2d/qalloc2.f95 \
-  $(CLAW_LIB)/step.f95 \
-  $(CLAW_LIB)/step1.f95 \
-  $(CLAW_LIB)/step2.f95 \
-  $(CLAW_LIB)/polyrecon.f95 \
-  $(CLAW_LIB)/weno.f95 \
-  $(CLAW_LIB)/tvd.f95 \
-  $(CLAW_LIB)/2d/bc2.f95 \
-  $(CLAW_LIB)/2d/src2.f95 \
-  $(CLAW_LIB)/2d/out2.f95 \
+  $(CLAW_LIB)/2d/Global2.f90 \
+  $(CLAW_LIB)/ClawData.f90 \
+  $(CLAW_LIB)/ClawParams.f90 \
+  $(CLAW_LIB)/reconstruct.f90 \
+  $(CLAW_LIB)/main.f90 \
+  $(CLAW_LIB)/sharpclaw.f90 \
+  $(CLAW_LIB)/2d/qalloc2.f90 \
+  $(CLAW_LIB)/step.f90 \
+  $(CLAW_LIB)/step1.f90 \
+  $(CLAW_LIB)/step2.f90 \
+  $(CLAW_LIB)/polyrecon.f90 \
+  $(CLAW_LIB)/2d/bc2.f90 \
+  $(CLAW_LIB)/2d/src2.f90 \
+  $(CLAW_LIB)/2d/out2.f90 \
   $(CLAW_LIB)/tfluct.f \
   $(CLAW_LIB)/evec.f \
   $(CLAW_LIB)/opendatafile.f

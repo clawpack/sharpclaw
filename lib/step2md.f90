@@ -10,7 +10,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     ! This value is passed into the Riemann solvers. The scaled fluctuations
     ! go into the array dq.
 
-    ! dq(i,.) modifies Q of cell i
+    ! dq(i,j,.) modifies Q of cell i
 
     ! WENO5 reconstruction with 3-pt. gauss quadrature
     ! Genuinely multi-d reconstruction
@@ -24,13 +24,9 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     external  rp,tfluct
     double precision, target, intent(in) :: q(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
     double precision, intent(inout) :: dq(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
-    double precision :: qgauss(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn, 3)
-    double precision :: q1dgauss(1-mbc:maxnx+mbc, meqn, 3)
-    double precision :: qlgauss(1-mbc:maxnx+mbc, meqn, 3)
-    double precision :: qrgauss(1-mbc:maxnx+mbc, meqn, 3)
     double precision :: aux(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, *)
     
-    double precision :: w(3,3,3), w5(5,3), wt(3)
+    double precision :: wt(3)
 
     double precision, intent(in) :: dt,t
     double precision, intent(out) :: cfl
@@ -88,11 +84,11 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         endif
 
         ! Reconstruct horizontal cell averages along a vertical slice
-        call weno_gauss(ixy,maxnx,meqn,mbc,nx(2),g%q1d,q1dgauss,g%aux2,g%aux2,w,w5)
+        call weno_gauss(ixy,g%q1d,nx(2))
 
         ! Store reconstructed vertical slice in qgauss
         forall(j=1-mbc:nx(2)+mbc, m=1:meqn, ig=1:3)
-            qgauss(i,j,m,ig) = q1dgauss(j,m,ig)
+            g%qgauss(i,j,m,ig) = g%q1dgauss(j,m,ig)
         end forall
             
     enddo ! End of outer loop over x
@@ -107,7 +103,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
         ! Store a horizontal slice of qgauss in q1dgauss
         forall(i=1-mbc:nx(1)+mbc, m=1:meqn, ig=1:3)
-            q1dgauss(i,m,ig) = qgauss(i,j,m,ig)
+            g%q1dgauss(i,m,ig) = g%qgauss(i,j,m,ig)
         end forall
 
         if (mcapa.gt.0)  then
@@ -124,8 +120,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
         ! Reconstruct left/right values at each gauss pt. on each
         ! interface along a horizontal slice
-        call weno_lines(ixy,maxnx,meqn,mbc,nx,q1dgauss,&
-                            qlgauss,qrgauss,g%aux2,g%aux2)
+        call weno_lines(ixy,g,nx(1))
 
         ! solve Riemann problem at each interface gauss pt. and compute 
         ! fluctuations
@@ -133,8 +128,8 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         do ig=1,3
 
             forall (i=1-mbc:nx(1)+mbc, m=1:meqn)
-                g%ql(i,m)=qlgauss(i,m,ig)
-                g%qr(i,m)=qrgauss(i,m,ig)
+                g%ql(i,m)=g%qlgauss(i,m,ig)
+                g%qr(i,m)=g%qrgauss(i,m,ig)
             end forall
                
             call rpn2(ixy,maxnx,meqn,mwaves,mbc,nx(1),g%ql,g%qr,g%aux2,g%aux2,&
@@ -214,12 +209,11 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         endif
 
         ! Reconstruct vertical cell averages along a horizontal slice
-        call weno_gauss(ixy,maxnx,meqn,mbc,nx(1),g%q1d,q1dgauss,&
-                            g%aux2,g%aux2,w,w5)
+        call weno_gauss(ixy,g,nx(1))
 
         ! Store reconstructed horizontal slice in qgauss
         forall(i=1-mbc:nx(1)+mbc,m=1:meqn,ig=1:3)
-            qgauss(i,j,m,ig) = q1dgauss(i,m,ig)
+            g%qgauss(i,j,m,ig) = g%q1dgauss(i,m,ig)
         end forall
             
     enddo !End of outer loop over y
@@ -233,7 +227,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     do i = 1-mbc, nx(1)+mbc
         ! Store a vertical slice of qgauss in q1dgauss
         forall(j=1-mbc:nx(2)+mbc, m=1:meqn, ig=1:3)
-            q1dgauss(j,m,ig) = qgauss(i,j,m,ig)
+            g%q1dgauss(j,m,ig) = g%qgauss(i,j,m,ig)
         end forall
 
         if (mcapa.gt.0)  then
@@ -248,8 +242,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
         ! Reconstruct left/right values at each gauss pt. on each
         ! interface along a vertical slice
-        call weno_lines(ixy,maxnx,meqn,mbc,nx(2),q1dgauss,&
-                            qlgauss,qrgauss,g%aux2,g%aux2)
+        call weno_lines(ixy,g,nx(2))
 
         ! solve Riemann problem at each interface gauss pt. and compute 
         ! fluctuations
@@ -257,8 +250,8 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         do ig=1,3
 
             forall (j = 1-mbc:nx(2)+mbc, m=1:meqn)
-                g%ql(j,m)=qlgauss(j,m,ig)
-                g%qr(j,m)=qrgauss(j,m,ig)
+                g%ql(j,m)=g%qlgauss(j,m,ig)
+                g%qr(j,m)=g%qrgauss(j,m,ig)
             end forall
                
             call rpn2(ixy,maxnx,meqn,mwaves,mbc,nx(2),g%ql,g%qr,g%aux2,g%aux2, &

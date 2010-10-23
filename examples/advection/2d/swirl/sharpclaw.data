@@ -5,8 +5,8 @@
 ########################################################
 
 2                         =: ndim         (number of dimensions)
-50                        =: mx           (cells in x direction)
-50                        =: my           (cells in y direction)
+200                       =: mx           (cells in x direction)
+200                       =: my           (cells in y direction)
 
 10                        =: nout         (number of output times)
 1                         =: outstyle     (style of specifying output times)

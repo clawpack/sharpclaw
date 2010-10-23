@@ -24,7 +24,7 @@
 0                         =: mcapa        (aux index for capacity fcn)
 0                         =: maux         (number of aux variables)
 0                         =: tfluct_solver (total fluctuation solver)
-2                         =: char_decomp  (characteristic decomposition)
+0                         =: char_decomp  (characteristic decomposition)
 
 3                         =: meqn         (number of equations)
 3                         =: mwaves       (number of waves)

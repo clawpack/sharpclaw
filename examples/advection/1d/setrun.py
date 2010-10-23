@@ -167,14 +167,14 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.tfluct_solver = 1
 
     #Use characteristic decomposition in reconstruction step?
-    clawdata.char_decomp = 1
+    clawdata.char_decomp = 0
 
     # Source terms?
     clawdata.src_term = 0
     
     
     # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 2
+    clawdata.lim_type = 1
 
     # --------------------
     # Boundary conditions:

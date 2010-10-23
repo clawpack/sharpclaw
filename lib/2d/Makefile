@@ -11,7 +11,7 @@
 #       output in HDF (version 4) format, type:   make xwclawhdf
 #       (from the application sub-directory)
 #
-#	To compile a single file.f95 type:	  make file.o
+#	To compile a single file.f90 type:	  make file.o
 #
 #	To combine all source files type:	  make program
 #       (from the application sub-directory)
@@ -21,7 +21,7 @@
 #       (date is appended)
 #
 .SUFFIXES:
-.SUFFIXES: .f .f95 .o .mod .F .f95
+.SUFFIXES: .f .f90 .o .mod .F .f90
 GFORT = gfortran
 FFLAGS = -O 
 LFLAGS = 
@@ -29,58 +29,52 @@ F77 = gfortran -c
 F95 = $(GFORT) -c
 LINK	= $(GFORT)
 
-.f95.o: ; $(F95) $(FFLAGS) $*.f95 -o $*.o 
-.f95.mod: ; $(F95) $(FFLAGS) $*.f95 -o $*.o 
+.f90.o: ; $(F95) $(FFLAGS) $*.f90 -o $*.o 
+.f90.mod: ; $(F95) $(FFLAGS) $*.f90 -o $*.o 
 
 LIB2DOBJECTS = \
   Global2.o\
   ../ClawParams.o\
   ../ClawData.o\
+  ../reconstruct.o\
   ../main.o\
   ../sharpclaw.o \
   ../step.o \
   ../step1.o \
+  ../step2.o \
+  ../step2md.o \
   ../polyrecon.o\
-  ../weno.o\
-  ../tvd.o\
   ../setprob.o \
   ../setaux.o \
   ../b4step.o \
   ../evec.o \
   ../tfluct.o \
-  ../step2.o \
-  ../step2md.o \
-  ../weno_gauss.o \
-  ../weno_lines.o \
   qalloc2.o \
   bc2.o \
   src2.o \
   out2.o 
 
 SOURCES = \
-  Global2.f95\
-  ../ClawParams.f95\
-  ../ClawData.f95\
-  ../main.f95\
-  ../sharpclaw.f95 \
-  ../step.f95 \
-  ../step2.f95 \
-  ../step2md.f95 \
-  ../weno_gauss.f95 \
-  ../weno_lines.f95 \
-  ../polyrecon.f95\
-  ../weno.f95\
-  ../tvd.f95\
-  ../setprob.f95 \
-  ../setaux.f95 \
-  ../b4step.f95 \
-  ../evec.f95 \
-  ../tfluct.f95 \
-  ../step2.f95 \
-  qalloc2.f95 \
-  bc2.f95 \
-  src2.f95 \
-  out2.f95 
+  Global2.f90\
+  ../ClawParams.f90\
+  ../ClawData.f90\
+  ../reconstruct.f90\
+  ../main.f90\
+  ../sharpclaw.f90 \
+  ../step.f90 \
+  ../step1.f90 \
+  ../step2.f90 \
+  ../step2md.f90 \
+  ../polyrecon.f90\
+  ../setprob.f90 \
+  ../setaux.f90 \
+  ../b4step.f90 \
+  ../evec.f90 \
+  ../tfluct.f90 \
+  qalloc2.f90 \
+  bc2.f90 \
+  src2.f90 \
+  out2.f90 
 
 lib2d: $(LIB2DOBJECTS)
 
