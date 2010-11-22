@@ -1,5 +1,5 @@
 ! ==========================================================
-subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
+subroutine flux2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 ! ==========================================================
 
     ! Evaluate dq/dt * (Delta t)
@@ -17,6 +17,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
     use ClawData
     use ClawParams
+    use reconstructmd
     implicit none
 
     type(griddat) g
@@ -84,7 +85,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         endif
 
         ! Reconstruct horizontal cell averages along a vertical slice
-        call weno_gauss(ixy,g%q1d,nx(2))
+        call weno_gauss(g%q1d,g%q1dgauss,nx(ixy))
 
         ! Store reconstructed vertical slice in qgauss
         forall(j=1-mbc:nx(2)+mbc, m=1:meqn, ig=1:3)
@@ -120,7 +121,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
         ! Reconstruct left/right values at each gauss pt. on each
         ! interface along a horizontal slice
-        call weno_lines(ixy,g,nx(1))
+        call weno_lines(nx(1),g%q1dgauss,g%qlgauss,g%qrgauss)
 
         ! solve Riemann problem at each interface gauss pt. and compute 
         ! fluctuations
@@ -132,7 +133,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
                 g%qr(i,m)=g%qrgauss(i,m,ig)
             end forall
                
-            call rpn2(ixy,maxnx,meqn,mwaves,mbc,nx(1),g%ql,g%qr,g%aux2,g%aux2,&
+            call rp(ixy,maxnx,meqn,mwaves,mbc,nx(1),g%ql,g%qr,g%aux2,g%aux2,&
                         g%wave,g%s,g%amdq,g%apdq)
 
             ! solve internal Riemann problem in each cell and compute updates
@@ -147,7 +148,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
                 enddo
             enddo
 
-            call rpn2(ixy,maxnx,meqn,mwaves,mbc,nx(1),g%ql,g%qr,g%auxl,g%auxr,&
+            call rp(ixy,maxnx,meqn,mwaves,mbc,nx(1),g%ql,g%qr,g%auxl,g%auxr,&
                         g%wave,g%s,g%amdq2,g%apdq2)
 
             if (mcapa.eq.0) then
@@ -209,7 +210,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         endif
 
         ! Reconstruct vertical cell averages along a horizontal slice
-        call weno_gauss(ixy,g,nx(1))
+        call weno_gauss(g%q1d,g%q1dgauss,nx(ixy))
 
         ! Store reconstructed horizontal slice in qgauss
         forall(i=1-mbc:nx(1)+mbc,m=1:meqn,ig=1:3)
@@ -242,7 +243,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
         ! Reconstruct left/right values at each gauss pt. on each
         ! interface along a vertical slice
-        call weno_lines(ixy,g,nx(2))
+        call weno_lines(nx(2),g%q1dgauss,g%qlgauss,g%qrgauss)
 
         ! solve Riemann problem at each interface gauss pt. and compute 
         ! fluctuations
@@ -254,7 +255,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
                 g%qr(j,m)=g%qrgauss(j,m,ig)
             end forall
                
-            call rpn2(ixy,maxnx,meqn,mwaves,mbc,nx(2),g%ql,g%qr,g%aux2,g%aux2, &
+            call rp(ixy,maxnx,meqn,mwaves,mbc,nx(2),g%ql,g%qr,g%aux2,g%aux2, &
                       g%wave,g%s,g%amdq,g%apdq)
 
             ! solve internal Riemann problem in each cell and compute updates
@@ -267,7 +268,7 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
                 g%auxl(j  ,m)=g%aux2(j,m)
             end forall
 
-            call rpn2(ixy,maxnx,meqn,mwaves,mbc,nx(2),g%ql,g%qr,g%auxl,g%auxr, &
+            call rp(ixy,maxnx,meqn,mwaves,mbc,nx(2),g%ql,g%qr,g%auxl,g%auxr, &
                          g%wave,g%s,g%amdq2,g%apdq2)
 
             if (mcapa.eq.0) then
@@ -305,4 +306,4 @@ subroutine step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 !  END OF B*q_y
 ! =====================================================
 
-end subroutine step2md
+end subroutine flux2md

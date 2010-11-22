@@ -11,14 +11,8 @@ module ClawData
       double precision, allocatable :: q1d(:,:),dq1d(:,:),aux2(:,:)
       double precision, allocatable :: dtdx1d(:), dtdy1d(:)
 
-      ! For multidimensional reconstruction in 2D:
-      ! This will be moved to a multid_reconstruct module
-      double precision, allocatable :: hgg(:,:,:), hff(:,:,:)
-      double precision, allocatable :: du(:,:,:),uhh(:,:,:,:),ugg(:,:,:,:)
       double precision, allocatable :: qgauss(:,:,:,:), q1dgauss(:,:,:)
       double precision, allocatable :: qlgauss(:,:,:), qrgauss(:,:,:)
-      double precision :: w(3,3,3), w5(5,3), wt(3)
-
   end type griddat
 
 end module

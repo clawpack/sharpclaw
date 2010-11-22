@@ -37,17 +37,17 @@ LIB1DOBJECTS = \
   ../ClawParams.o\
   ../ClawData.o\
   ../reconstruct.o\
+  ../reconstructmd.o\
   ../main.o\
   ../sharpclaw.o \
-  ../step.o \
-  ../step1.o \
+  step1d.o \
+  ../flux1.o \
   ../polyrecon.o\
   ../setprob.o \
   ../setaux.o \
   ../b4step.o \
   ../evec.o \
   ../tfluct.o \
-  ../step2.o \
   qalloc1.o \
   bc1.o \
   src1.o \
@@ -58,18 +58,18 @@ SOURCES = \
   Global1.f90\
   ../ClawParams.f90\
   ../ClawData.f90\
-  ../reconstruct.o\
+  ../reconstruct.f90\
+  ../reconstructmd.f90\
   ../main.f90\
   ../sharpclaw.f90 \
-  ../step.f90 \
-  ../step1.f90 \
+  step1d.f90 \
+  ../flux1.f90 \
   ../polyrecon.f90\
   ../setprob.f90 \
   ../setaux.f90 \
   ../b4step.f90 \
   ../evec.f90 \
   ../tfluct.f90 \
-  ../step2.f90 \
   qalloc1.f90 \
   bc1.f90 \
   src1.f90 \

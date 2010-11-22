@@ -5,8 +5,11 @@ subroutine step(q,g,dq,aux,dt,cfl,t,rp,src,tfluct)
     ! File: step.f95    
     ! Author: David Ketcheson
 
+    ! This is the two-dimensional step routine:
     ! Apply boundary conditions to q
-    ! Then call appropriate subroutine to compute (delta t) * dq/dt
+    ! Apply source terms, if anyway
+    ! Then compute the fluxes
+
     use ClawData
     use ClawParams
     implicit none
@@ -15,12 +18,7 @@ subroutine step(q,g,dq,aux,dt,cfl,t,rp,src,tfluct)
     double precision, intent(in) :: q,aux,dt,t
     external rp,src,tfluct
 
-    select case(ndim)
-        case(1)
-            call bc(maxnx,meqn,mbc,nx,xlower,dx,q,maux,aux,t,dt,mthbc)
-        case(2)
-            call bc(meqn,mbc,nx,xlower,dx,q,maux,aux,t,dt,mthbc)
-    end select
+    call bc(meqn,mbc,nx,xlower,dx,q,maux,aux,t,dt,mthbc)
 
     ! Evaluate source terms: Evaluate (delta t) * psi(q,t) and store in dq
     ! if there is no source term, the default routine simply sets dq=0
@@ -28,16 +26,11 @@ subroutine step(q,g,dq,aux,dt,cfl,t,rp,src,tfluct)
     call src(q,dq,aux,t,dt)
 
     !Now add the hyperbolic part to dq
-    select case(ndim)
+    select case(multid_recon)
+        case(0)
+            call flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         case(1)
-            call step1(q,g,dq,aux,dt,cfl,t,rp,tfluct,1)
-        case(2)
-            select case(multid_recon)
-                case(0)
-                    call step2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
-                case(1)
-                    ! call step2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
-            end select
+            ! call flux2md(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     end select
 
 end subroutine step

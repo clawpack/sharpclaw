@@ -37,12 +37,13 @@ LIB2DOBJECTS = \
   ../ClawParams.o\
   ../ClawData.o\
   ../reconstruct.o\
+  ../reconstructmd.o\
   ../main.o\
   ../sharpclaw.o \
-  ../step.o \
-  ../step1.o \
-  ../step2.o \
-  ../step2md.o \
+  step2d.o \
+  ../flux1.o \
+  flux2.o \
+  flux2md.o \
   ../polyrecon.o\
   ../setprob.o \
   ../setaux.o \
@@ -59,12 +60,13 @@ SOURCES = \
   ../ClawParams.f90\
   ../ClawData.f90\
   ../reconstruct.f90\
+  ../reconstructmd.f90\
   ../main.f90\
   ../sharpclaw.f90 \
-  ../step.f90 \
-  ../step1.f90 \
-  ../step2.f90 \
-  ../step2md.f90 \
+  step2d.f90 \
+  ../flux1.f90 \
+  flux2.f90 \
+  flux2md.f90 \
   ../polyrecon.f90\
   ../setprob.f90 \
   ../setaux.f90 \

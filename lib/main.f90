@@ -16,6 +16,7 @@ program sharpclaw_main
     USE ClawParams
     use Global
     use reconstruct
+    use reconstructmd
     implicit none
     external bc,tfluct,rp,src,b4step
     
@@ -26,7 +27,7 @@ program sharpclaw_main
     double precision :: t0,tstart,tend,dtout
     double precision, allocatable, dimension (:) :: tout
     
-    character*16 fname
+    character*25 fname
 
     double precision :: cfl_maxused, cfl_last
     double precision :: dt_minused, dt_maxused, dt_last
@@ -118,7 +119,12 @@ program sharpclaw_main
 
     ! Work array allocations
     ! all should eventually be here once the arrays are moved into modules
-    call alloc_recon_workspace(maxnx,mbc,meqn,mwaves,lim_type,char_decomp)
+    if (multid_recon==0) then
+        call alloc_recon_workspace(maxnx,mbc,meqn,mwaves,lim_type,char_decomp)
+    elseif (ndim>1 .and. multid_recon==1) then
+        call set_md_weno_weights()
+        call alloc_reconmd_workspace(maxnx,nx,mbc,meqn,mwaves,char_decomp)
+    endif
 
 
     if ((mthbc(1).eq.2 .and. mthbc(2).ne.2) .or. &
@@ -250,6 +256,10 @@ program sharpclaw_main
     endif
 
     call dealloc_recon_workspace(lim_type,char_decomp)
+
+    if (ndim>1 .and. multid_recon==1) then
+        call dealloc_reconmd_workspace(char_decomp)
+    endif
 
 
 end program sharpclaw_main

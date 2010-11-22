@@ -1,5 +1,5 @@
 ! ===================================================================
-subroutine step1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
+subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 ! ===================================================================
 !
 !     # Evaluate (delta t) * dq(t)/dt
@@ -162,4 +162,4 @@ subroutine step1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
         end forall
     endif
 
-end subroutine step1
+end subroutine flux1

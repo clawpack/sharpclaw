@@ -1,5 +1,5 @@
 ! ==========================================================
-subroutine step2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
+subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 ! ==========================================================
 
     ! Evaluate (delta t) *dq/dt
@@ -7,8 +7,8 @@ subroutine step2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     ! dimension-by-dimension version
     ! (No genuinely multi-d terms)
 
-    ! g%dq1d is used to return increments to q from step1
-    ! See the step1 documentation for more information.
+    ! g%dq1d is used to return increments to q from flux1
+    ! See the flux1 documentation for more information.
 
     use ClawData
     use ClawParams
@@ -41,7 +41,7 @@ subroutine step2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         endif
 
         ! compute modification dq1d along this slice:
-        call step1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,1)
+        call flux1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,1)
         cfl = dmax1(cfl,cfl1d)
 
         if (mcapa.eq.0) then
@@ -73,7 +73,7 @@ subroutine step2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
             auxp => aux(i,:,:)
         endif
 
-        call step1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,2)
+        call flux1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,2)
         cfl = dmax1(cfl,cfl1d)
 
         if (mcapa.eq.0) then
@@ -88,4 +88,4 @@ subroutine step2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         endif
     enddo !end y sweeps
 
-end subroutine step2
+end subroutine flux2

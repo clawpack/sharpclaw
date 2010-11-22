@@ -46,12 +46,14 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/ClawData.f90 \
   $(CLAW_LIB)/ClawParams.f90 \
   $(CLAW_LIB)/reconstruct.f90 \
+  $(CLAW_LIB)/reconstructmd.f90 \
   $(CLAW_LIB)/main.f90 \
   $(CLAW_LIB)/sharpclaw.f90 \
   $(CLAW_LIB)/2d/qalloc2.f90 \
-  $(CLAW_LIB)/step.f90 \
-  $(CLAW_LIB)/step1.f90 \
-  $(CLAW_LIB)/step2.f90 \
+  $(CLAW_LIB)/2d/step2d.f90 \
+  $(CLAW_LIB)/flux1.f90 \
+  $(CLAW_LIB)/2d/flux2.f90 \
+  $(CLAW_LIB)/2d/flux2md.f90 \
   $(CLAW_LIB)/polyrecon.f90 \
   $(CLAW_LIB)/2d/bc2.f90 \
   $(CLAW_LIB)/2d/src2.f90 \

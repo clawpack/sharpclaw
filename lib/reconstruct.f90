@@ -7,38 +7,6 @@ module reconstruct
 
 contains
 
-    subroutine dealloc_recon_workspace(lim_type,char_decomp)
-        integer,intent(in) :: lim_type,char_decomp
-
-        select case(lim_type)
-            case(1)
-            select case(char_decomp)
-                case(1) ! Storage for tvd2_wave()
-                    deallocate(uu)
-                case(2) ! Storage for tvd2_char()
-                    deallocate(dq)
-                    deallocate( u)
-                    deallocate(hh)
-            end select
-            case(2)
-             select case(char_decomp)
-                case(0)
-                    deallocate(uu)
-                    deallocate(dq1m)
-                case(2) ! Storage for weno5_char
-                    deallocate(dq)
-                    deallocate(uu)
-                    deallocate(hh)
-                case(3) ! Storage for weno5_trans
-                    deallocate(dq)
-                    deallocate(gg)
-                    deallocate( u)
-                    deallocate(hh)
-                    deallocate(uh)
-            end select
-        end select
-    end subroutine dealloc_recon_workspace
-
     subroutine alloc_recon_workspace(maxnx,mbc,meqn,mwaves,lim_type,char_decomp)
         integer,intent(in) :: maxnx,mbc,meqn,mwaves,char_decomp,lim_type
 
@@ -71,6 +39,39 @@ contains
         end select
 
     end subroutine alloc_recon_workspace
+
+
+    subroutine dealloc_recon_workspace(lim_type,char_decomp)
+        integer,intent(in) :: lim_type,char_decomp
+
+        select case(lim_type)
+            case(1)
+            select case(char_decomp)
+                case(1) ! Storage for tvd2_wave()
+                    deallocate(uu)
+                case(2) ! Storage for tvd2_char()
+                    deallocate(dq)
+                    deallocate( u)
+                    deallocate(hh)
+            end select
+            case(2)
+             select case(char_decomp)
+                case(0)
+                    deallocate(uu)
+                    deallocate(dq1m)
+                case(2) ! Storage for weno5_char
+                    deallocate(dq)
+                    deallocate(uu)
+                    deallocate(hh)
+                case(3) ! Storage for weno5_trans
+                    deallocate(dq)
+                    deallocate(gg)
+                    deallocate( u)
+                    deallocate(hh)
+                    deallocate(uh)
+            end select
+        end select
+    end subroutine dealloc_recon_workspace
 
     ! ===================================================================
     subroutine weno5(q,ql,qr)
