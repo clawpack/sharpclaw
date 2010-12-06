@@ -11,8 +11,8 @@ CLAWMAKE = $(CLAW)/util/Makefile.common
 # Adjust these variables if desired:
 # ----------------------------------
 
-CLAW_PKG = SharpClaw                  # Clawpack package to use
-CLAW_EXE = xsclaw                    # Executable to create
+CLAW_PKG = SharpClaw                # Clawpack package to use
+CLAW_EXE = xsclaw                   # Executable to create
 CLAW_setrun_file = setrun.py        # File containing function to make data
 CLAW_OUTDIR = _output               # Directory for output
 CLAW_setplot_file = setplot.py      # File containing function to set plots
