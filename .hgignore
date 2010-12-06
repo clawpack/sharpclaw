@@ -1,0 +1,15 @@
+syntax: glob
+
+*.o
+*.html
+*.mod
+_plots
+fort.*
+*.pyc
+_output
+*.log
+.data
+.plots
+.output
+.DS_Store
+xsclaw
