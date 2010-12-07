@@ -102,5 +102,17 @@ Numerical Scheme
     * 2: WENO reconstruction
 
 **mthlim** (*integer*)
-    Which limiter to use.
+    The meaning of **mhtlim** depends on the value of **lim_type**:
+    
+    * **lim_type** =0:
+        
+        * **mthlim** =3: Third-order polynomial reconstruction
+        * **mthlim** =7: Seventh-order polynomial reconstruction
 
+    * **lim_type** =1:
+
+        * The value of **mthlim** selects a TVD limiter exactly as in Clawpack
+
+    * **lim_type** =2:
+
+        * The value of **mthlim** does not matter; 5th-order WENO reconstruction          is used
