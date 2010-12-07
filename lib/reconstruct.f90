@@ -134,8 +134,8 @@ contains
                 end do
             end do
 
-           qr(mbc-1:mx2-mbc-1,m)=uu(mbc:mx2-mbc+1,1)
-           ql(mbc:mx2-mbc,m)=uu(mbc:mx2-mbc+1,2)
+           qr(mbc-1:mx2-mbc,  m)=uu(mbc:mx2-mbc+1,1)
+           ql(mbc  :mx2-mbc+1,m)=uu(mbc:mx2-mbc+1,2)
 
         end do
 
