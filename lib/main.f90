@@ -167,14 +167,14 @@ program sharpclaw_main
     ! =================================================================
     ! Main loop
     ! =================================================================
-    tend = t0
+    tend = t0  ! tend is set equal to the initial time t0
     do n=1,nout
         tstart = tend
         select case(outstyle)
-            case(1)
-                tend = tstart + dtout
+              case(1)
+                tend = tstart + dtout  ! dtout: time increment between outputting solution
             case(2)
-                tend = tout(n)
+                tend = tout(n)   ! Output only the final solution
             case(3)
                 tend = tstart - 1.d0  !# single-step mode
         end select
