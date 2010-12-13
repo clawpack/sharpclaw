@@ -79,6 +79,12 @@ program sharpclaw_main
     read(55,*) cfl_desired
     read(55,*) max_steps
 
+!    write(*,*) dt_initial
+!    write(*,*) dt_max
+!    write(*,*) cfl_max
+!    write(*,*) cfl_desired
+!    write(*,*) max_steps
+
     ! input parameters for clawpack routines
     read(55,*) dt_variable
     read(55,*) time_integrator
@@ -139,6 +145,7 @@ program sharpclaw_main
     do i=1,ndim
         dx(i) = (xupper(i) - xlower(i)) / float(nx(i))
     enddo
+    
 
     ! time increments between outputting solution:
     if (outstyle .eq. 1) then
@@ -157,7 +164,7 @@ program sharpclaw_main
     endif
 
     ! Set initial conditions:
-    call qinit(mx,meqn,mbc,nx,xlower,dx,q,maux,aux)
+    call qinit(ndim,meqn,mbc,nx,xlower,dx,q,maux,aux)
 
     ! Output initial data
     call output(meqn,mbc,nx,xlower,dx,q,t0,0,aux,maux)
@@ -183,6 +190,7 @@ program sharpclaw_main
                 dt_maxused,dt_last,steps_taken,info,dt_initial,dt_max, &
                 dt_variable,time_integrator,verbosity, &
                 cfl_max,cfl_desired,max_steps,r1,r2,bc,rp,tfluct,src,b4step)
+
 
         ! check to see if an error occured:
         if (info .ne. 0) then

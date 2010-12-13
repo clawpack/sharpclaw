@@ -32,6 +32,7 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     ! perform x-sweeps
     ! ==================
 
+   
     do j = 0,nx(2)+1
 
         ! copy data along a slice into 1d arrays:
@@ -43,6 +44,7 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         ! compute modification dq1d along this slice:
         call flux1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,1)
         cfl = dmax1(cfl,cfl1d)
+
 
         if (mcapa.eq.0) then
             ! no capa array.  Standard flux differencing:

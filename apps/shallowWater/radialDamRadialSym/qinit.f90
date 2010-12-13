@@ -1,17 +1,17 @@
-! =========================================================
-       subroutine qinit(maxmx,meqn,mbc,mx,xlower,dx,q,maux,aux)
-! =========================================================
+! =============================================================
+       subroutine qinit(ndim,meqn,mbc,nx,xlower,dx,q,maux,aux)
+! =============================================================
 
      ! Set initial conditions for q.
 
 
       implicit double precision (a-h,o-z)
-      integer, parameter :: ndim=1
-      integer :: mx(ndim)
+      integer :: ndim
+      integer :: nx(ndim)
       double precision :: xlower(ndim), dx(ndim)
 
-      double precision, intent(out) :: q(1-mbc:mx(1)+mbc, meqn)
-      dimension aux(1-mbc:mx(1)+mbc, *)
+      double precision, intent(out) :: q(1-mbc:nx(1)+mbc, meqn)
+      dimension aux(1-mbc:nx(1)+mbc, *)
       common/cdisc/ x0,y0,alf,beta,r0,idisc
       common /comic/ hin,hout
 
@@ -19,7 +19,7 @@
       width = 0.2d0
 
      !write(*,*) r0,hin,hout
-      do i=1,mx(1)
+      do i=1,nx(1)
         xcell = xlower(1) + (i-0.5d0)*dx(1)
         if (xcell .lt. r0) then
              h = hin

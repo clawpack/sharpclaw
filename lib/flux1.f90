@@ -53,6 +53,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
     endif
     if (ndim.gt.1) dq1d=0.d0
 
+
     select case(lim_type)
         ! Non-limited reconstruction of components of q (simplest approach)
         case(0)
