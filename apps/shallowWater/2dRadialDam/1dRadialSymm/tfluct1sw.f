@@ -1,6 +1,6 @@
 c =========================================================
-      subroutine tfluct(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,
-     &                  s,adq)
+      subroutine tfluct(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,
+     &                  auxl,auxr,s,adq)
 c =========================================================
 c
 c     # This routine computes the total fluctuation for the 
