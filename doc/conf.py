@@ -67,7 +67,7 @@ release = '0.3'
 exclude_patterns = ['_build']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
-#default_role = None
+default_role = None
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 #add_function_parentheses = True
@@ -216,6 +216,6 @@ man_pages = [
 ]
 
 jsmath_path = '/Users/ketch/jsMath/easy/load.js'
-default_role = 'math'
+#default_role = 'math'
 keep_warnings = 'True'
 
