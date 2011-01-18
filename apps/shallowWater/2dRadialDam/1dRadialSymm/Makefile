@@ -25,10 +25,16 @@ FC ?= gfortran   # default if not set as environment variable
 FFLAGS = 
 
 
+#---------------------------------------------------------------------------
+# Set path to the correct library which might be used by the user-functions
+#---------------------------------------------------------------------------
+CLAW_LIBDIMENSION = /1d
+
+
 # ---------------------------------
 # List of sources for this program:
 # ---------------------------------
-    
+
 CLAW_SOURCES = \
   qinit.f90 \
   rp1sw.f \
