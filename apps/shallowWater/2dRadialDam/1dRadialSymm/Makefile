@@ -2,7 +2,7 @@
 # Makefile for Clawpack code in this directory.
 # This version only sets the local files and frequently changed
 # options, and then includes the standard makefile pointed to by CLAWMAKE.
-CLAWMAKE = $(CLAW)/util/Makefile.common
+SCLAWMAKE = $(SCLAW)/util/Makefile.common
 
 # See the above file for details and a list of make options, or type
 #   make .help
@@ -69,7 +69,7 @@ CLAW_LIBSOURCES = \
 
 #-------------------------------------------------------------------
 # Include Makefile containing standard definitions and make options:
-include $(CLAWMAKE)
+include $(SCLAWMAKE)
 
 
 ### DO NOT remove this line - make depends on it ###
