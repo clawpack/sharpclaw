@@ -23,8 +23,8 @@
       
       do i=1,nx(1)
         rad_pos = xlower(ndim) + (i-0.5d0)*dx(ndim)
-        dq(i,1) = -1.d0*dt*q(i,1)*q(i,2)/rad_pos
-        dq(i,2) = -1.0d0*dt*q(i,1)*q(i,2)**2/rad_pos
+        dq(i,1) = -1.d0*dt*q(i,2)/rad_pos
+        dq(i,2) = -1.0d0*dt*q(i,2)**2/q(i,1)/rad_pos
       enddo
 
       end subroutine src
