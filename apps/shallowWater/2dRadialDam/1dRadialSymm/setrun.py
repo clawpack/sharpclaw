@@ -60,7 +60,7 @@ def setrun(claw_pkg='sharpclaw'):
     
 
     # Number of grid cells:
-    clawdata.mx = 2000
+    clawdata.mx = 300
     
 
     # ---------------
@@ -168,7 +168,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.tfluct_solver = 1
 
     # Use characteristic decomposition in reconstruction step?
-    clawdata.char_decomp = 0
+    clawdata.char_decomp = 1
 
     # Source term ### NOT USED!!!!
     clawdata.src_term = 0

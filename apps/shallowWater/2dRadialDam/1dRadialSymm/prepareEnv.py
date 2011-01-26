@@ -13,7 +13,7 @@ print "Hello, Word! This is my first python script. It calls few times 'make' wi
 cwd = os.getcwd()
 
 # Clean current directory
-print "CLEAN CURRENTY DIRECTORY \n"
+print "CLEAN CURRENT DIRECTORY \n"
 os.system("make clean")
 os.system("make clobber")
 
@@ -31,7 +31,7 @@ os.system("make clean")
 
 # INSERT THE PROBLEM SPACE DIMENSION
 print "\n"
-print "IS THE TEST CASE 1D, 2D? "
+print "IS THE TEST CASE 1D or 2D? "
 dim = raw_input("Type 1 or 2: ")
 
 if dim.lower() == '1':
