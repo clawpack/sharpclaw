@@ -33,8 +33,9 @@ CLAW_SOURCES = \
   qinit.f90 \
   rp1.f \
   tfluct1.f \
-  evec.f \
-  setprob.f 
+  setprob.f \
+  evec.f
+
 
 
 # Clawpack library to be used:

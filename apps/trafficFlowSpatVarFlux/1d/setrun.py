@@ -53,16 +53,13 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.ndim = 1
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = -60.0
+    clawdata.xlower = -20.0
     clawdata.xupper = 40.0
 
     # Number of grid cells:
     clawdata.mx = 500
 
 
-
-    
-    
 
     # ---------------
     # Size of system:
@@ -142,11 +139,11 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.9
-    clawdata.cfl_max = 1.0
+    clawdata.cfl_desired = 0.2
+    clawdata.cfl_max = 0.3
     
     # Maximum number of time steps to allow between output times:
-    clawdata.max_steps = 1000
+    clawdata.max_steps = 50000
 
     
     
@@ -166,17 +163,17 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.mthlim = [5]
     
     #User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 0 
+    clawdata.tfluct_solver = 0
 
     #Use characteristic decomposition in reconstruction step?
-    clawdata.char_decomp = 0
+    clawdata.char_decomp = 1
 
     # Source terms?
     clawdata.src_term = 0
     
     
     # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 2
+    clawdata.lim_type = 1
 
     # --------------------
     # Boundary conditions:
