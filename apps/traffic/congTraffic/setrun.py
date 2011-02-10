@@ -160,13 +160,13 @@ def setrun(claw_pkg='sharpclaw'):
     
     # List of limiters to use for each wave family:  
     # Required:  len(mthlim) == mwaves
-    clawdata.mthlim = [5]
+    clawdata.mthlim = [4]
     
     #User-supplied total fluctuation solver?
     clawdata.tfluct_solver = 0
 
     #Use characteristic decomposition in reconstruction step?
-    clawdata.char_decomp = 1
+    clawdata.char_decomp = 0
 
     # Source terms?
     clawdata.src_term = 0

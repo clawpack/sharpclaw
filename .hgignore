@@ -8,11 +8,14 @@ fort.*
 *.pyc
 _output
 *.log
-.data
+*.data
 .plots
 .output
 .DS_Store
 xsclaw
 mysharpclaw/
+apps/traffic/
+apps/shallowWater/2dSteady/
+apps/shallowWater/2dRadialDam/1dRadialSymm-1/
 doc/
 

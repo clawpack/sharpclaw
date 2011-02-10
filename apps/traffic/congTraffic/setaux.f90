@@ -13,7 +13,7 @@
 
       do i=1-mbc,mx(1)+mbc
         xcell = xlower(1) + (i-0.5d0)*dx(1)
-        if (xcell .le. 0.d0) then
+        if (xcell .lt. 0.d0) then
              aux(i,1) = 2.0d0
          else
              aux(i,1) = 1.0d0
