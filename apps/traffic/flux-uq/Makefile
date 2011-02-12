@@ -39,6 +39,7 @@ CLAW_SOURCES = \
   qinit.f90 \
   rpq-wave.f90 \
   setprob.f90 \
+  tfluct1.f \
   setaux.f90
 
 
@@ -63,7 +64,6 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/1d/out1.f90 \
   $(CLAW_LIB)/opendatafile.f \
   $(CLAW_LIB)/1d/src1.f90 \
-  $(CLAW_LIB)/tfluct.f90
 
 
 #-------------------------------------------------------------------

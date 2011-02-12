@@ -60,7 +60,7 @@ def setrun(claw_pkg='sharpclaw'):
     
 
     # Number of grid cells:
-    clawdata.mx = 100
+    clawdata.mx = 500
     
 
     # ---------------

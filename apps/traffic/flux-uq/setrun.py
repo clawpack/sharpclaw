@@ -60,7 +60,7 @@ def setrun(claw_pkg='sharpclaw'):
     
 
     # Number of grid cells:
-    clawdata.mx = 800
+    clawdata.mx = 10
     
 
     # ---------------
@@ -97,7 +97,7 @@ def setrun(claw_pkg='sharpclaw'):
 
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
-        clawdata.nout = 5
+        clawdata.nout = 50
         clawdata.tfinal = 20.0
 
     elif clawdata.outstyle == 2:
@@ -141,8 +141,8 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.1
-    clawdata.cfl_max = 0.9
+    clawdata.cfl_desired = 0.45
+    clawdata.cfl_max = 0.5
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 5000
