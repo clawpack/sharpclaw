@@ -1,3 +1,4 @@
+
 # Makefile for Clawpack code in this directory.
 # This version only sets the local files and frequently changed
 # options, and then includes the standard makefile pointed to by CLAWMAKE.
@@ -30,10 +31,8 @@ FFLAGS =
     
 CLAW_SOURCES = \
   qinit.f90 \
+  rpf-wave.f \
   setaux.f90 \
-  rp1f-wave.f90 \
-# rp1q-wave.f
-#  tfluct1.f90
 
 
 
@@ -57,9 +56,9 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/1d/src1.f90 \
   $(CLAW_LIB)/1d/out1.f90 \
   $(CLAW_LIB)/opendatafile.f \
+  $(CLAW_LIB)/tfluct.f \
   $(CLAW_LIB)/evec.f90 \
-  $(CLAW_LIB)/setprob.f90 \
-  $(CLAW_LIB)/tfluct.f90
+  $(CLAW_LIB)/setprob.f90
 
 
 #-------------------------------------------------------------------

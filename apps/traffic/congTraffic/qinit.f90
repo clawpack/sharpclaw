@@ -16,15 +16,15 @@
 
 !
 !
-      qls = 0.13d0
-      qrs = 0.1d0
+      ql = 0.2d0
+      qr = 0.1d0
 
       do i=1,mx(1)
         xcell = xlower(1) + (i-0.5d0)*dx(1)
         if (xcell .lt. 0.d0) then
-            q(i,1) = qls
+            q(i,1) = ql
         else
-            q(i,1) = qrs
+            q(i,1) = qr
         endif
 
       enddo
