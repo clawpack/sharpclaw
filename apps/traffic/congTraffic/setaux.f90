@@ -1,32 +1,29 @@
-!     ============================================
-      subroutine setaux(maxmx,mbc,mx,xlower,dx,maux,aux)
-!     ============================================
+! ==================================================
+  subroutine setaux(maxmx,mbc,mx,xlower,dx,maux,aux)
+! ==================================================
 !
-!     # Set auxiliary array for traffic flow with variable speed limit umax
+! # Set auxiliary array for traffic flow with variable speed limit umax.
+! # The auxiliary array contains the distribution of the velocity
 !
 !     
-      implicit double precision (a-h,o-z)
+  implicit none
       
-      integer :: mx(1)
-      double precision:: dx(1)
-      double precision :: xlower(1)
-      dimension aux(1-mbc:maxmx+mbc, 1)
+  integer :: maxmx, mbc, maux
+  integer :: mx(1)
+  double precision:: xlower(1),dx(1)
+  double precision :: aux(1-mbc:maxmx+mbc, 1)
 
-      common /cout/ umax(-1:20002)
-!
-      pi = 4.d0*datan(1.d0)
+  integer :: i
+  double precision :: xCell
+  
+  do i=1-mbc,mx(1)+mbc
+  	xCell = xlower(1) + (i-0.5d0)*dx(1)
+  		if (xCell .le. 0.d0) then
+  			aux(i,1) = 2.d0
+        else
+        	aux(i,1) = 1.d0
+        endif
+  enddo
 
-      do i=1-mbc,mx(1)+mbc
-      
-      xcell = xlower(1) + (i-0.5d0)*dx(1)
-     
-
-         if (xcell .le. 0.d0) then
-             aux(i,1) = 2.d0
-         else
-             aux(i,1) = 1.0d0
-         endif
-      enddo
-
-       
-       end subroutine setaux
+  return     
+  end subroutine setaux

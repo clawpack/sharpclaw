@@ -33,10 +33,10 @@ def setrun(claw_pkg='sharpclaw'):
     # Problem-specific parameters to be written to setprob.data:
     #------------------------------------------------------------------
 
-    #probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
+    probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    #probdata.add_param('beta',   300.,   'IC Width')
-    #probdata.add_param('ic',   1,  'IC type')
+    probdata.add_param('rho1-rho2',   [0.13,0.1],  'Densities')
+    probdata.add_param('u1-u2',       [2.0,1.0],  'Velocities')
 
     
     #------------------------------------------------------------------
@@ -57,11 +57,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.xupper = 40.0
 
     # Number of grid cells:
-    clawdata.mx = 500
-
-
-
-    
+    clawdata.mx = 500   
     
 
     # ---------------
