@@ -37,7 +37,7 @@ CLAW_LIBDIMENSION = /1d
 
 CLAW_SOURCES = \
   qinit.f90 \
-  rpq-wave.f90 \
+  rpf-wave.f90 \
   setprob.f90 \
   setaux.f90
 

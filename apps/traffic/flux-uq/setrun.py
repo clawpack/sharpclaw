@@ -34,7 +34,7 @@ def setrun(claw_pkg='sharpclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('u1-u2',      [2.0,1.0],       'Velocities')
+    probdata.add_param('u1-u2',      [2.0,2.0],       'Velocities')
     probdata.add_param('rho1-rho2',  [0.3333,0.1],  'Densities')
     #probdata.add_param('x0-y0',     [0.0,0.0],  'Coordinates of the dam center')
     #probdata.add_param('r0',        0.5,        'Initial radius')
