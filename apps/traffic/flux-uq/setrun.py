@@ -28,18 +28,18 @@ def setrun(claw_pkg='sharpclaw'):
     assert claw_pkg.lower() == 'sharpclaw',  "Expected claw_pkg = 'sharpclaw'"
 
     rundata = data.ClawRunData(pkg=claw_pkg, ndim=1)
-
     #------------------------------------------------------------------
     # Problem-specific parameters to be written to setprob.data:
     #------------------------------------------------------------------
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('g',         1.0,        'Gravitational constant')
-    probdata.add_param('x0-y0',     [0.0,0.0],  'Coordinates of the dam center')
-    probdata.add_param('r0',        0.5,        'Initial radius')
-    probdata.add_param('hin',       2.0,        'Internal height')
-    probdata.add_param('hout',      1.0,        'External height')
+    probdata.add_param('u1-u2',      [2.0,1.0],       'Velocities')
+    probdata.add_param('rho1-rho2',  [0.3333,0.1],  'Densities')
+    #probdata.add_param('x0-y0',     [0.0,0.0],  'Coordinates of the dam center')
+    #probdata.add_param('r0',        0.5,        'Initial radius')
+    #probdata.add_param('hin',       2.0,        'Internal height')
+    #probdata.add_param('hout',      1.0,        'External height')
     
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -55,12 +55,12 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.ndim = 1
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = 0.0
-    clawdata.xupper = 2.5
+    clawdata.xlower = -45
+    clawdata.xupper = 45
     
 
     # Number of grid cells:
-    clawdata.mx = 100
+    clawdata.mx = 800
     
 
     # ---------------
@@ -68,10 +68,10 @@ def setrun(claw_pkg='sharpclaw'):
     # ---------------
 
     # Number of equations in the system:
-    clawdata.meqn = 2
+    clawdata.meqn = 1
 
     # Number of auxiliary variables in the aux array (initialized in setaux)
-    clawdata.maux = 0
+    clawdata.maux = 1
     
     # Index of aux array corresponding to capacity function, if there is one:
     clawdata.mcapa = 0
@@ -97,8 +97,8 @@ def setrun(claw_pkg='sharpclaw'):
 
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
-        clawdata.nout = 6
-        clawdata.tfinal = 1.5
+        clawdata.nout = 5
+        clawdata.tfinal = 20.0
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
@@ -134,15 +134,15 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Initial time step for variable dt.  
     # If dt_variable==0 then dt=dt_initial for all steps:
-    clawdata.dt_initial = 0.5
+    clawdata.dt_initial = 0.05
     
     # Max time step to be allowed if variable dt used:
     clawdata.dt_max = 1e+99
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.9
-    clawdata.cfl_max = 1.0
+    clawdata.cfl_desired = 0.1
+    clawdata.cfl_max = 0.9
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 5000
@@ -155,20 +155,20 @@ def setrun(claw_pkg='sharpclaw'):
     # ------------------
 
     # Time integrator
-    clawdata.time_integrator = 4
+    clawdata.time_integrator = 2
     
     # Number of waves in the Riemann solution:
-    clawdata.mwaves = 2
+    clawdata.mwaves = 1
     
     # List of limiters to use for each wave family:  
     # Required:  len(mthlim) == mwaves
-    clawdata.mthlim = [5, 5]
+    clawdata.mthlim = [5]
     
     # User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 1
+    clawdata.tfluct_solver = 0
 
     # Use characteristic decomposition in reconstruction step?
-    clawdata.char_decomp = 1
+    clawdata.char_decomp = 0
 
     # Source term ### NOT USED!!!!
     clawdata.src_term = 0
@@ -191,7 +191,7 @@ def setrun(claw_pkg='sharpclaw'):
     #   2 => periodic (must specify this at both boundaries)
     #   3 => solid wall for systems where q(2) is normal velocity
     
-    clawdata.mthbc_xlower = 3
+    clawdata.mthbc_xlower = 1
     clawdata.mthbc_xupper = 1
     
     return rundata
