@@ -12,8 +12,8 @@
   double precision :: q(1-mbc:maxmx+mbc, meqn)
   double precision :: aux(1-mbc:maxmx+mbc, *)
   
-  double precision :: rho1, rho2
-  common /param/ rho1,rho2
+  double precision :: rho1, rho2, u1, u2
+  common /param/ rho1, rho2, u1, u2
 
   integer :: i
   double precision :: xCell

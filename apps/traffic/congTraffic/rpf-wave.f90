@@ -33,14 +33,24 @@
   integer :: i
   double precision :: fim1, fi, sim1, si, dq, f0
   
+  
+  ! do i=1-mbc,mx(1)+mbc
+  !       write(*,*) i,auxl(i,1),auxl(i,1)
+  !enddo
+  
+  
   do i=2-mbc,mx(1)+mbc
+  
+    !write(*,*) auxl(i,1),auxr(i,1)
+  
+  
   	! # Flux in each cell and flux difference
-    fim1 = auxl(i-1,1)*qr(i-1,1)*(1.d0 - qr(i-1,1))
+    fim1 = auxr(i-1,1)*qr(i-1,1)*(1.d0 - qr(i-1,1))
     fi = auxl(i,1)*ql(i,1)*(1.d0 - ql(i,1))
     fwave(i,1,1) = fi - fim1
 
     ! # Characteristic speed in each cell:
-	sim1 = auxl(i-1,1)*(1.d0 - 2.d0*qr(i-1,1))
+	sim1 = auxr(i-1,1)*(1.d0 - 2.d0*qr(i-1,1))
 	si = auxl(i,1)*(1.d0 - 2.d0*ql(i,1))
 
     if (sim1 .lt. 0.d0 .and. si .le. 0.d0) then
@@ -62,7 +72,7 @@
         ! # Entropy fix:  (perhaps doesn't work for all cases!!!)
         ! # This assumes the flux in the transonic case should
         ! # correspond to q=0.5 on the side with the smaller umax value.
-        f0 = dmin1(auxl(i-1,1),auxl(i,1))*0.25d0
+        f0 = dmin1(auxr(i-1,1),auxl(i,1))*0.25d0
         amdq(i,1) = f0 - fim1
         apdq(i,1) = fi - f0
 

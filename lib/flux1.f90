@@ -27,6 +27,15 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 !     t is the time at which we want to evaluate dq/dt, which may not
 !      be the current simulation time
 ! ===================================================================
+!
+! Add here some info about modifications.
+!
+!  Modified: February 13, 2011
+!            Matteo Parsani
+!
+!
+!
+! ===================================================================
 
     USE ClawData
     use ClawParams
@@ -41,7 +50,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
     double precision, target :: aux(1-mbc:nx(ixy)+mbc, maux)
     double precision, intent(out) :: cfl
     integer, intent(in) :: ixy
-    integer mx
+    integer mx,t
     double precision, pointer :: auxpl(:,:), auxpr(:,:)
 
     mx=nx(ixy)
@@ -145,17 +154,30 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 
     else
         ! Or we can just swap things around and use the usual Riemann solver
-        ! This may be more convenient, but is less efficient.
+        ! This may be more convenient, but is less efficient. 
+        ! For the moment the swapping is done working with the element of the 
+        ! vectors qr, ql, auxl, auxr. 
+        ! 
+        ! TODO: Working with pointers!!!
+        
         do i = 1-mbc+1,mx+mbc
             do m = 1, meqn
                 g%qr(i-1,m) = g%ql(i,m)
                 g%ql(i  ,m) = g%qr(i,m)
             enddo
         enddo
-        auxpr => aux(1-mbc+1:,:)
-        auxpl => aux
+    
+        do i = 1-mbc+1,mx+mbc
+            do m = 1, meqn
+                g%auxr(i-1,m) = aux(i,m) !aux is not griddat type
+                g%auxl(i  ,m) = aux(i,m) !aux is not griddat type
+            enddo
+        enddo
+        !auxpr => aux(1-mbc+1:,:)
+        !auxpl => aux
+        
         call rp(ixy,maxnx,meqn,mwaves,mbc,mx,g%ql,g%qr, &
-                 auxpr,auxpl,g%wave,g%s,g%amdq2,g%apdq2)
+                 g%auxl,g%auxr,g%wave,g%s,g%amdq2,g%apdq2)
 
         forall(i=1:mx, m=1:meqn)
             dq1d(i,m) = dq1d(i,m)-g%dtdx(i)*(g%amdq(i+1,m)+ &

@@ -53,11 +53,11 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.ndim = 1
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = -60.0
+    clawdata.xlower = -20.0
     clawdata.xupper = 40.0
 
-    # Number of grid cells:
-    clawdata.mx = 500   
+    # Number of grid cells plus one:
+    clawdata.mx = 500  
     
 
     # ---------------
@@ -117,7 +117,7 @@ def setrun(claw_pkg='sharpclaw'):
     # The current t, dt, and cfl will be printed every time step
     # at AMR levels <= verbosity.  Set verbosity = 0 for no printing.
     #   (E.g. verbosity == 2 means print only on levels 1 and 2.)
-    clawdata.verbosity = 1
+    clawdata.verbosity = 0
     
     
 
@@ -138,11 +138,11 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.9
-    clawdata.cfl_max = 1.0
+    clawdata.cfl_desired = 0.3
+    clawdata.cfl_max = 0.4
     
     # Maximum number of time steps to allow between output times:
-    clawdata.max_steps = 1000
+    clawdata.max_steps = 50000
 
     
     
@@ -152,14 +152,14 @@ def setrun(claw_pkg='sharpclaw'):
     # ------------------
 
     # Time integrator
-    clawdata.time_integrator = 4
+    clawdata.time_integrator = 2
     
     # Number of waves in the Riemann solution:
     clawdata.mwaves = 1
     
     # List of limiters to use for each wave family:  
     # Required:  len(mthlim) == mwaves
-    clawdata.mthlim = [5]
+    clawdata.mthlim = [4]
     
     #User-supplied total fluctuation solver?
     clawdata.tfluct_solver = 0 
@@ -172,7 +172,7 @@ def setrun(claw_pkg='sharpclaw'):
     
     
     # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 2
+    clawdata.lim_type = 1  
 
     # --------------------
     # Boundary conditions:

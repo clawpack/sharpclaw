@@ -59,7 +59,7 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/1d/out1.f90 \
   $(CLAW_LIB)/opendatafile.f \
   $(CLAW_LIB)/evec.f90 \
-  $(CLAW_LIB)/tfluct.f 
+  $(CLAW_LIB)/tfluct.f90 
 
 
 #-------------------------------------------------------------------
