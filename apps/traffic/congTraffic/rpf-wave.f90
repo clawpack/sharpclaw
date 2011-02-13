@@ -2,12 +2,16 @@
   subroutine rp(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,fwave,s,amdq,apdq)
 ! =============================================================================
 !
-! # Solve Riemann problems for the traffic equation.
-! # with variable speed limit umax, using the f-wave approach
-! # umax is stored in aux(i,1)
+! # Solve Riemann problems for the non-linear traffic flow equation 
+! # q_t + (u_max(x)*q*(1-q))_x = 0,
+! # with variable speed limit umax, using the f-wave approach.
+! # Since u_max=u_max(x), the problem has a spatially varying flux
+! # function. 
+!
 !
 ! # On input, ql contains the state vector at the left edge of each cell
 ! #           qr contains the state vector at the right edge of each cell
+!
 ! # On output, wave contains the waves, 
 ! #            s the speeds, 
 ! #            amdq the  left-going flux difference  A^- \Delta q
@@ -34,16 +38,9 @@
   double precision :: fim1, fi, sim1, si, dq, f0
   
   
-  ! do i=1-mbc,mx(1)+mbc
-  !       write(*,*) i,auxl(i,1),auxl(i,1)
-  !enddo
-  
   
   do i=2-mbc,mx(1)+mbc
-  
-    !write(*,*) auxl(i,1),auxr(i,1)
-  
-  
+
   	! # Flux in each cell and flux difference
     fim1 = auxr(i-1,1)*qr(i-1,1)*(1.d0 - qr(i-1,1))
     fi = auxl(i,1)*ql(i,1)*(1.d0 - ql(i,1))

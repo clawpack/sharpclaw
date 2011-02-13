@@ -35,8 +35,8 @@ def setrun(claw_pkg='sharpclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('rho1-rho2',   [0.13,0.1],  'Densities')
-    probdata.add_param('u1-u2',       [2.0,1.0],  'Velocities')
+    probdata.add_param('rho1-rho2',   [0.13,0.1],  'Initial densities')
+    probdata.add_param('u1-u2',       [2.0,1.0],   'Velocities')
 
     
     #------------------------------------------------------------------
@@ -117,7 +117,7 @@ def setrun(claw_pkg='sharpclaw'):
     # The current t, dt, and cfl will be printed every time step
     # at AMR levels <= verbosity.  Set verbosity = 0 for no printing.
     #   (E.g. verbosity == 2 means print only on levels 1 and 2.)
-    clawdata.verbosity = 0
+    clawdata.verbosity = 1
     
     
 
@@ -138,11 +138,11 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.3
-    clawdata.cfl_max = 0.4
+    clawdata.cfl_desired = 0.2
+    clawdata.cfl_max = 0.3
     
     # Maximum number of time steps to allow between output times:
-    clawdata.max_steps = 50000
+    clawdata.max_steps = 5000
 
     
     
@@ -152,17 +152,17 @@ def setrun(claw_pkg='sharpclaw'):
     # ------------------
 
     # Time integrator
-    clawdata.time_integrator = 2
+    clawdata.time_integrator = 4
     
     # Number of waves in the Riemann solution:
     clawdata.mwaves = 1
     
     # List of limiters to use for each wave family:  
     # Required:  len(mthlim) == mwaves
-    clawdata.mthlim = [4]
+    clawdata.mthlim = [5]
     
     #User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 0 
+    clawdata.tfluct_solver = 1 
 
     #Use characteristic decomposition in reconstruction step?
     clawdata.char_decomp = 0
@@ -172,7 +172,7 @@ def setrun(claw_pkg='sharpclaw'):
     
     
     # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 1  
+    clawdata.lim_type = 2  
 
     # --------------------
     # Boundary conditions:

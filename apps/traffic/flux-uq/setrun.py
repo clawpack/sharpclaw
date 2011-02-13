@@ -165,7 +165,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.mthlim = [5]
     
     # User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 0
+    clawdata.tfluct_solver = 1
 
     # Use characteristic decomposition in reconstruction step?
     clawdata.char_decomp = 0

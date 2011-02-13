@@ -2,8 +2,8 @@
   subroutine setprob
 ! ==================
 
-! # Set initial distribution of car density.
-! # Set velocity of the cars.
+! # Set initial cars distribution and velocity u_max for the non-linear 
+! # traffic flow equation q_t + (u_max(x)*q*(1-q))_x = 0.
   
   implicit none
   
