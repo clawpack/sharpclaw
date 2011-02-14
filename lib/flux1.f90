@@ -48,6 +48,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
     double precision :: q1d(1-mbc:nx(ixy)+mbc, meqn)
     dimension    dq1d(1-mbc:maxnx+mbc, meqn)
     double precision, target :: aux(1-mbc:nx(ixy)+mbc, maux)
+    double precision :: auxl(1-mbc:nx(ixy)+mbc, maux), auxr(1-mbc:nx(ixy)+mbc, maux)
     double precision, intent(out) :: cfl
     integer, intent(in) :: ixy
     integer mx,t
@@ -169,9 +170,9 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 
         if (maux .gt. 0) then
         	do i = 1-mbc+1,mx+mbc
-            	do m = 1, meqn
-                	g%auxr(i-1,m) = aux(i,m) !aux is not griddat type
-                	g%auxl(i  ,m) = aux(i,m) !aux is not griddat type
+            	do m = 1, maux
+                	auxr(i-1,m) = aux(i,m) !aux is not griddat type
+               		auxl(i  ,m) = aux(i,m) !aux is not griddat type
                 enddo
             enddo
         endif
@@ -179,7 +180,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
         !auxpl => aux
         
         call rp(ixy,maxnx,meqn,mwaves,mbc,mx,g%ql,g%qr, &
-                 g%auxl,g%auxr,g%wave,g%s,g%amdq2,g%apdq2)
+                 auxl,auxr,g%wave,g%s,g%amdq2,g%apdq2)
 
         forall(i=1:mx, m=1:meqn)
             dq1d(i,m) = dq1d(i,m)-g%dtdx(i)*(g%amdq(i+1,m)+ &
