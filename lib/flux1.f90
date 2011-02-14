@@ -30,7 +30,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 !
 ! Add here some info about modifications.
 !
-!  Modified: February 13, 2011
+! Modified: February 13, 2011
 !            Matteo Parsani
 !
 !
@@ -166,13 +166,15 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
                 g%ql(i  ,m) = g%qr(i,m)
             enddo
         enddo
-    
-        do i = 1-mbc+1,mx+mbc
-            do m = 1, meqn
-                g%auxr(i-1,m) = aux(i,m) !aux is not griddat type
-                g%auxl(i  ,m) = aux(i,m) !aux is not griddat type
+
+        if (maux .gt. 0) then
+        	do i = 1-mbc+1,mx+mbc
+            	do m = 1, meqn
+                	g%auxr(i-1,m) = aux(i,m) !aux is not griddat type
+                	g%auxl(i  ,m) = aux(i,m) !aux is not griddat type
+                enddo
             enddo
-        enddo
+        endif
         !auxpr => aux(1-mbc+1:,:)
         !auxpl => aux
         
