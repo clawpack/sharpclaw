@@ -35,10 +35,11 @@
   	q(i,1) = 1.d0 - aux(i,1)
   	q(i,2) = 0.d0
   	
-  	!xCell = xlower(1) + (i-0.5d0)*dx(1)
-    !if (xCell .ge. 1.1d0 .and. xCell .le. 1.2d0) then
-    !	q(i,1) = q(i,1) !+ eps
-    !endif
+  	xCell = xlower(1) + (i-0.5d0)*dx(1)
+    if (xCell .ge. 1.1d0 .and. xCell .le. 1.2d0) then
+    	q(i,1) = q(i,1) + eps
+    endif
+    
   enddo
 
   return

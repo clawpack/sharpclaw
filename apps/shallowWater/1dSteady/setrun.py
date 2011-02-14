@@ -60,7 +60,7 @@ def setrun(claw_pkg='sharpclaw'):
     
 
     # Number of grid cells:
-    clawdata.mx = 200
+    clawdata.mx = 3000
     
 
     # ---------------
@@ -98,7 +98,7 @@ def setrun(claw_pkg='sharpclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 10
-        clawdata.tfinal = 10
+        clawdata.tfinal = 0.2
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
@@ -165,7 +165,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.mthlim = [5, 5]
     
     # User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 1
+    clawdata.tfluct_solver = 0
 
     # Use characteristic decomposition in reconstruction step?
     clawdata.char_decomp = 0

@@ -68,7 +68,7 @@
 		
 		! # Flux differences + discretized source term
 		fluxDiff(1) = (hr*ur) - (hl*ul)
-		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl) + grav*hbar*(br-bl)
+		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl)
 		
 		! # Wave speeds
 		s(i,1) = uhat-chat
