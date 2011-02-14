@@ -1,6 +1,6 @@
-! ================================================================================
-	subroutine rp(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,fwave,s,amdq,apdq)
-! ================================================================================
+! =======================================================================
+	subroutine tfluct(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,s,adq)
+! =======================================================================
 !
 ! # Solve Riemann problems for the 1D shallow water equations
 ! # (h)_t + (h*u)_x = 0
@@ -24,7 +24,6 @@
 ! # From the basic clawpack routine step1, rp is called with ql = qr = q.
 !
 ! # Here meqn=mwaves=2 should be passed from the calling routine
-
 	implicit none 
 	
 	integer :: ixy, maxmx, meqn, mwaves, mbc
@@ -37,6 +36,7 @@
     double precision :: fwave(1-mbc:maxmx+mbc, meqn, mwaves)
     double precision :: amdq(1-mbc:maxmx+mbc, meqn)
     double precision :: apdq(1-mbc:maxmx+mbc, meqn)
+    double precision :: adq(1-mbc:maxmx+mbc, meqn)
     
     
     double precision :: grav
@@ -52,14 +52,14 @@
     
     do i=2-mbc,mx(1)+mbc
     	! # Left states
-		hl = qr(i-1,1)
-		ul = qr(i-1,2)/hl
-		bl = auxr(i-1,1)
+		hl = ql(i,1)
+		ul = ql(i,2)/hl
+		bl = auxl(i,1)
 		
 		! # Right states
-		hr = ql(i,1)
-		ur = ql(i,2)/hr
-		br = auxl(i,1)
+		hr = qr(i,1)
+		ur = qr(i,2)/hr
+		br = auxr(i,1)
 		
 		! # Average states (they come from the Roe's linearization)
 		hbar = 0.5*(hr+hl)
@@ -119,7 +119,14 @@
 				endif
 			enddo
 		enddo
+		
+		do j=1,meqn
+			adq(i,j)=amdq(i,j) + apdq(i,j)
+		enddo
+			
+		
+		
 	enddo
 	
 	return
-	end subroutine rp
+	end subroutine tfluct
