@@ -35,9 +35,8 @@ def setrun(claw_pkg='sharpclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('grav',       1.0,        'Gravitational constant')
-    probdata.add_param('eps',        0.2,      'Perturbation for the initial condition')
-    #probdata.add_param('x0-y0',     [0.0,0.0],  'Coordinates of the dam center')
+    probdata.add_param('grav',      9.81,        'Gravitational constant')
+    probdata.add_param('eps',       0.2,        'Perturbation')
     #probdata.add_param('r0',        0.5,        'Initial radius')
     #probdata.add_param('hin',       2.0,        'Internal height')
     #probdata.add_param('hout',      1.0,        'External height')
@@ -61,7 +60,7 @@ def setrun(claw_pkg='sharpclaw'):
     
 
     # Number of grid cells:
-    clawdata.mx = 200
+    clawdata.mx = 500
     
 
     # ---------------
@@ -98,8 +97,8 @@ def setrun(claw_pkg='sharpclaw'):
 
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
-        clawdata.nout = 0
-        clawdata.tfinal = 0.0
+        clawdata.nout = 10
+        clawdata.tfinal = 0.2
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
@@ -135,15 +134,15 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Initial time step for variable dt.  
     # If dt_variable==0 then dt=dt_initial for all steps:
-    clawdata.dt_initial = 0.5
+    clawdata.dt_initial = 0.1
     
     # Max time step to be allowed if variable dt used:
     clawdata.dt_max = 1e+99
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.5
-    clawdata.cfl_max = 0.7
+    clawdata.cfl_desired = 0.2
+    clawdata.cfl_max = 0.5
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 5000
@@ -163,10 +162,10 @@ def setrun(claw_pkg='sharpclaw'):
     
     # List of limiters to use for each wave family:  
     # Required:  len(mthlim) == mwaves
-    clawdata.mthlim = [4, 4]
+    clawdata.mthlim = [5, 5]
     
     # User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 0
+    clawdata.tfluct_solver = 1
 
     # Use characteristic decomposition in reconstruction step?
     clawdata.char_decomp = 0
@@ -176,7 +175,7 @@ def setrun(claw_pkg='sharpclaw'):
 
 
     # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 1
+    clawdata.lim_type = 2
 
     
     # --------------------

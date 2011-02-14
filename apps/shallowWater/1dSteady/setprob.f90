@@ -1,24 +1,36 @@
-! ========================================
-      subroutine setprob
-! ========================================
-      implicit double precision (a-h,o-z)
-      character*12 fname
-      common /param/ grav
-      common /perturb/ eps
+! ==================
+  subroutine setprob
+! ==================
+!
+! # Set problem parameters for the following 1D shallow water equations 
+! #
+! # (h)_t + (h*u)_x = 0
+! # (hu)_t + (h*u^2 + 1/2*grav*h^2) = -grav*h*(b)_x
+! #
+! # where b=b(x) represents the bottom topography.
+!
+! # The value of the gravity acceleration is stored in grav
+! # The value of the perturbation for the initial solution is stored in eps
 
-!    # Set some parameters for the 1D shallow water equations
+  implicit none
+      
+  integer :: iunit
+  character*12 fname
+  
+  double precision :: grav, eps
+  common /comrp/ grav
+  common /perturb/ eps
 
-      iunit = 7
-      fname = 'setprob.data'
+  iunit = 7
+  fname = 'setprob.data'
 
-      call opendatafile(iunit, fname)
+  call opendatafile(iunit, fname)
                 
-!     # Gravitational constant:
-      read(7,*) grav
+! # Gravitational constant:
+  read(7,*) grav
 
-!     # Data for the initial condition. It is used in qinit.f90:
-      read(7,*) eps
+! # Perturbation for the initial condition
+  read(7,*) eps
 
-
-      return
-      end subroutine setprob
+  return
+  end subroutine setprob

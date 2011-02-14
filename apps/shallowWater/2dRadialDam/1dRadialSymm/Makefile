@@ -40,7 +40,7 @@ CLAW_SOURCES = \
   rp1sw.f \
   setprob.f90 \
   src1.f90 \
-  tfluct1sw.f 
+#  tfluct1sw.f 
 
 
 # Clawpack library to be used:
@@ -63,8 +63,8 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/b4step.f90 \
   $(CLAW_LIB)/evec.f90 \
   $(CLAW_LIB)/1d/out1.f90 \
-  $(CLAW_LIB)/opendatafile.f
-
+  $(CLAW_LIB)/opendatafile.f \
+  $(CLAW_LIB)/tfluct.f90
 
 
 #-------------------------------------------------------------------

@@ -30,10 +30,8 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 !
 ! Add here some info about modifications.
 !
-! Modified: February 13, 2011
-!            Matteo Parsani
-!
-!
+! Modified: February 14, 2011
+! Author:   Matteo Parsani
 !
 ! ===================================================================
 

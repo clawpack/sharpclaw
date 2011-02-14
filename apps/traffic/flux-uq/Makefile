@@ -40,7 +40,7 @@ CLAW_SOURCES = \
   rpf-wave.f90 \
   setprob.f90 \
   setaux.f90 \
-  tfluct1.f 
+#  tfluct1.f 
 
 
 
@@ -65,7 +65,7 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/1d/out1.f90 \
   $(CLAW_LIB)/opendatafile.f \
   $(CLAW_LIB)/1d/src1.f90 \
- # $(CLAW_LIB)/tfluct.f90
+  $(CLAW_LIB)/tfluct.f90
 
 
 #-------------------------------------------------------------------
