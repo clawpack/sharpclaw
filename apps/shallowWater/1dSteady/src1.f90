@@ -22,7 +22,7 @@
   
   do i=1,nx(1)
     dq(i,1) = 0.d0
-    dq(i,2) = -1.0d0*grav*q(i,1)*((aux(i+1,1)-aux(i-1,1))/(2*dx(1)))*dt !src = -g*h*(bottom)_x
+    dq(i,2) = -1.0d0*grav*q(i,1)*(aux(i,1)-aux(i-1,1))/dx(1)*dt !src = -g*h*(bottom)_x
   enddo
   
 
