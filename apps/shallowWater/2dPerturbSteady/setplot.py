@@ -29,18 +29,17 @@ def setplot(plotdata):
 
     # Set up for axes in this figure:
     plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [-2.5, 2.5]
-    plotaxes.ylimits = [-2.5, 2.5]
+    plotaxes.xlimits = [0, 2.0]
+    plotaxes.ylimits = [0.0, 1.0]
     plotaxes.title = 'q[0]'
     plotaxes.scaled = True
 
     # Set up for item on these axes:
-    plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
+    plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
     plotitem.plot_var = 0
-    plotitem.pcolor_cmap = colormaps.red_yellow_blue
-    plotitem.pcolor_cmin = 0.5
-    plotitem.pcolor_cmax = 1.5
-    plotitem.add_colorbar = True
+    plotitem.contour_min = 0.99942
+    plotitem.contour_max = 1.00656
+    plotitem.contour_colors = 'k'
     plotitem.show = True       # show on plot?
     
 
@@ -65,14 +64,6 @@ def setplot(plotdata):
         return r,q
     plotitem.map_2d_to_1d = q_vs_radius
     plotitem.plotstyle = 'o'
-
-    # Plot the 1drad solution on scatter plot:
-    #plotitem = plotaxes.new_plotitem(plot_type='1d_plot')
-    #plotitem.plot_var = 0
-    #import os
-    #plotitem.outdir = os.path.abspath('1dRadialSymm/_output')
-    #plotitem.plotstyle = 'r-'
-
 
     # Figure for q[1]
     plotfigure = plotdata.new_plotfigure(name='q[1]', figno=1)

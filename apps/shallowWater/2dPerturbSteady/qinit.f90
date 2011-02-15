@@ -31,6 +31,8 @@
     integer :: i, j
 	double precision :: xCell, yCell
 	
+	write(*,*) eps
+	
 	do i=1-mbc,mx(1)+mbc
 		xCell = xlower(1) + (i-0.5d0)*dx(1)
     	do j=1-mbc,mx(2)+mbc	

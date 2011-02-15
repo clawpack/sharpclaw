@@ -1,52 +1,55 @@
-! =========================================================
-subroutine output(meqn,mbc,nx,xlower,dx,q,t,iframe,aux,maux)
-! =========================================================
+! ==============================================================
+	subroutine output(meqn,mbc,nx,xlower,dx,q,t,iframe,aux,maux)
+! ==============================================================
 !
-!     # Output the results for a general system of conservation laws
-!     # in 2 dimensions
+! # Output the results for a general system of conservation laws
+! # in 2 dimensions
 !
-      implicit double precision (a-h,o-z)
-      integer, parameter :: ndim=2
-      integer, intent(in) :: nx(ndim)
-      double precision :: q(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
-      double precision :: physVar(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
-      double precision :: aux(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, maux)
-      character*10 fname1, fname2, fname3
-      double precision, intent(in) :: xlower(ndim), dx(ndim)
-      logical outaux
+! # Here the quantity (h + bottom topo) is printed in the fort.qxxxx file
+! # as a first variable, i.e. q[0].
+
+
+	implicit double precision (a-h,o-z)
+    integer, parameter :: ndim=2
+    integer, intent(in) :: nx(ndim)
+    double precision :: q(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
+    double precision :: physVar(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
+    double precision :: aux(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, maux)
+    character*10 fname1, fname2, fname3
+    double precision, intent(in) :: xlower(ndim), dx(ndim)
+    logical outaux
       
-      outaux = .false.
+    outaux = .false.
+
+!   # Write the results to the file fort.q<iframe>
+!   # Use format required by matlab script  plotclaw2.m
+!   # The same format is used by the amrclaw package.
+!   # Here it's adapted to output just the single grid.
+!   # first create the file name and open file
 !
-!     # Write the results to the file fort.q<iframe>
-!     # Use format required by matlab script  plotclaw2.m
-!     # The same format is used by the amrclaw package.
-!     # Here it's adapted to output just the single grid.
-!
-!     # first create the file name and open file
-!
-         fname1 = 'fort.qxxxx'
-         fname2 = 'fort.txxxx'
-         fname3 = 'fort.axxxx'
-         nstp = iframe
-         do 55 ipos = 10, 7, -1
-            idigit = mod(nstp,10)
+    fname1 = 'fort.qxxxx'
+    fname2 = 'fort.txxxx'
+    fname3 = 'fort.axxxx'
+    nstp = iframe
+    	do 55 ipos = 10, 7, -1
+        	idigit = mod(nstp,10)
             fname1(ipos:ipos) = char(ichar('0') + idigit)
             fname2(ipos:ipos) = char(ichar('0') + idigit)
             fname3(ipos:ipos) = char(ichar('0') + idigit)
             nstp = nstp / 10
  55      continue
 
-         open(unit=50,file=fname1,status='unknown',form='formatted')
-         open(unit=60,file=fname2,status='unknown',form='formatted')
+	open(unit=50,file=fname1,status='unknown',form='formatted')
+    open(unit=60,file=fname2,status='unknown',form='formatted')
 
 !
-!     # the following parameters are used in amrclaw where there are
-!     # multiple grids.  Here they are all set to 1:
-      ngrids = 1
-      mptr = 1
-      level = 1
+!   # the following parameters are used in amrclaw where there are
+!   # multiple grids.  Here they are all set to 1:
+    ngrids = 1
+    mptr = 1
+    level = 1
 
-      write(50,1001) mptr,level,nx(1),nx(2)
+    write(50,1001) mptr,level,nx(1),nx(2)
  1001 format(i5,'                 grid_number',/, &
              i5,'                 AMR_level',/, &
              i5,'                 mx',/, &

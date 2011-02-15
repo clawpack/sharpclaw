@@ -37,11 +37,10 @@ CLAW_LIBDIMENSION = /1d
 
 CLAW_SOURCES = \
   qinit.f90 \
-  rpq-wave.f \
+  rpf-wave.f90 \
   setprob.f90 \
   setaux.f90 \
-  src1.f90 \
-  tfluctq-wave.f 
+  tfluctf-wave.f90 
   
 
 # Clawpack library to be used:
@@ -64,9 +63,8 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/evec.f90 \
   $(CLAW_LIB)/1d/out1.f90 \
   $(CLAW_LIB)/opendatafile.f \
+  $(CLAW_LIB)/1d/src1.f90 
   #$(CLAW_LIB)/tfluct.f90
-  #$(CLAW_LIB)/1d/src1.f90 
-
 
 #-------------------------------------------------------------------
 # Include Makefile containing standard definitions and make options:

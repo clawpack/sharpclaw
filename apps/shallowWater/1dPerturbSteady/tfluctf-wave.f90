@@ -2,28 +2,27 @@
 	subroutine tfluct(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,s,adq)
 ! =======================================================================
 !
-! # Solve Riemann problems for the 1D shallow water equations
+! # Compute the total fluctucations for the 1D shallow water equations
+! #
 ! # (h)_t + (h*u)_x = 0
 ! # (hu)_t + (h*u^2 + 1/2*grav*h^2) = -grav*h*(b)_x
-! # using f-wave algorithm and Roe's approximate Riemann solver.  
+! #
+! # by solving the Riemann problem with the f-wave algorithm and the
+! # Roe's approximate Riemann solver.
+! # The initial condition for the Riemann problem are: left state  ql(i,:)
+! #                                                    right state qr(i,:)
 ! #
 ! # With the f-wave approach the source term in the discharge equation 
 ! # is treated here. Therefore, the user do not have to provide 
 ! # a subroutine which compute the contribution of the source term to the residual.
 ! # Thus the default (empty) src1.f90 subroutine is called.
+! #
+! # On output, s contains the speeds, 
+! #            adq the total fluctuation A \Delta q
 !
-! # On input, ql contains the state vector at the left edge of each cell
-! #           qr contains the state vector at the right edge of each cell
-! # On output, wave contains the waves, 
-! #            s the speeds, 
-! #            amdq the  left-going flux difference  A^- \Delta q
-! #            apdq the right-going flux difference  A^+ \Delta q
 !
-! # Note that the i'th Riemann problem has left state qr(i-1,:)
-! #                                    and right state ql(i,:)
 ! # From the basic clawpack routine step1, rp is called with ql = qr = q.
-!
-! # Here meqn=mwaves=2 should be passed from the calling routine
+
 	implicit none 
 	
 	integer :: ixy, maxmx, meqn, mwaves, mbc
@@ -54,12 +53,12 @@
     	! # Left states
 		hl = ql(i,1)
 		ul = ql(i,2)/hl
-		bl = auxl(i,1)
+		bl = auxl(i-1,1)
 		
 		! # Right states
 		hr = qr(i,1)
 		ur = qr(i,2)/hr
-		br = auxr(i,1)
+		br = auxr(i+1,1)
 		
 		! # Average states (they come from the Roe's linearization)
 		hbar = 0.5*(hr+hl)
@@ -68,7 +67,7 @@
 		
 		! # Flux differences + discretized source term
 		fluxDiff(1) = (hr*ur) - (hl*ul)
-		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl) + grav*hbar*(br-bl)
+		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl) + grav*hbar*(br-bl)/2
 		
 		! # Wave speeds
 		s(i,1) = uhat-chat

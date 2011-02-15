@@ -1,17 +1,17 @@
 ! ================================================================================
 	subroutine rp(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,fwave,s,amdq,apdq)
 ! ================================================================================
-!
+
 ! # Solve Riemann problems for the 1D shallow water equations
+! #
 ! # (h)_t + (h*u)_x = 0
 ! # (hu)_t + (h*u^2 + 1/2*grav*h^2)_x = -grav*h*(b)_x
+! #
 ! # using f-wave algorithm and Roe's approximate Riemann solver.  
 ! #
 ! # With the f-wave approach the source term in the discharge equation 
-! # is treated here. Therefore, the user do not have to provide 
-! # a subroutine which compute the contribution of the source term to the residual.
-! # Thus the default (empty) src1.f90 subroutine is called.
-!
+! # should be treated here. However, its contribution has been taken into account 
+! # in the tfluctf-wave.f90 subroutine, which solves a Riemann problem at the interface.!
 ! # On input, ql contains the state vector at the left edge of each cell
 ! #           qr contains the state vector at the right edge of each cell
 ! # On output, wave contains the waves, 
@@ -22,8 +22,7 @@
 ! # Note that the i'th Riemann problem has left state qr(i-1,:)
 ! #                                    and right state ql(i,:)
 ! # From the basic clawpack routine step1, rp is called with ql = qr = q.
-!
-! # Here meqn=mwaves=2 should be passed from the calling routine
+
 
 	implicit none 
 	
@@ -42,7 +41,7 @@
     double precision :: grav
 	common /comrp/ grav
 	
-	double precision :: hl, ul, bl, hr, ur, br, hbar, uhat, chat
+	double precision :: hl, ul, hr, ur, hbar, uhat, chat
 	double precision :: R(2,2)
 	double precision :: L(2,2)
 	double precision :: fluxDiff(2), beta(2)
@@ -54,12 +53,10 @@
     	! # Left states
 		hl = qr(i-1,1)
 		ul = qr(i-1,2)/hl
-		bl = auxr(i-1,1)
 		
 		! # Right states
 		hr = ql(i,1)
 		ur = ql(i,2)/hr
-		br = auxl(i,1)
 		
 		! # Average states (they come from the Roe's linearization)
 		hbar = 0.5*(hr+hl)
@@ -68,7 +65,7 @@
 		
 		! # Flux differences + discretized source term
 		fluxDiff(1) = (hr*ur) - (hl*ul)
-		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl)
+		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl) 
 		
 		! # Wave speeds
 		s(i,1) = uhat-chat

@@ -35,11 +35,11 @@ def setrun(claw_pkg='sharpclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('g',         1.0,        'Gravitational constant')
-    probdata.add_param('x0-y0',     [0.0,0.0],  'Coordinates of the dam center')
-    probdata.add_param('r0',        0.5,        'Initial radius')
-    probdata.add_param('hin',       2.0,        'Internal height')
-    probdata.add_param('hout',      1.0,        'External height')
+    probdata.add_param('grav',      1.0,        'Gravitational constant')
+    probdata.add_param('eps',       0.01,        'Perturbation')
+    #probdata.add_param('r0',        0.5,        'Initial radius')
+    #probdata.add_param('hin',       2.0,        'Internal height')
+    #probdata.add_param('hout',      1.0,        'External height')
  
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -63,8 +63,8 @@ def setrun(claw_pkg='sharpclaw'):
         
 
     # Number of grid cells:
-    clawdata.mx = 50
-    clawdata.my = 50
+    clawdata.mx = 25
+    clawdata.my = 25
         
 
     # ---------------
@@ -97,7 +97,7 @@ def setrun(claw_pkg='sharpclaw'):
     # Note that the time integration stops after the final output time.
     # The solution at initial time t0 is always written in addition.
 
-    clawdata.outstyle = 1
+    clawdata.outstyle = 2
 
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
@@ -106,7 +106,7 @@ def setrun(claw_pkg='sharpclaw'):
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
-        clawdata.tout =  [0.5, 1.0]   # used if outstyle == 2
+        clawdata.tout =  [0.12, 0.24, 0.36, 0.48, 0.6]   # used if outstyle == 2
         clawdata.nout = len(clawdata.tout)
 
     elif clawdata.outstyle == 3:
@@ -145,8 +145,8 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.2
-    clawdata.cfl_max = 0.3
+    clawdata.cfl_desired = 0.5
+    clawdata.cfl_max = 0.7
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 500
