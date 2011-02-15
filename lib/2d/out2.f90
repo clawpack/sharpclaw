@@ -9,8 +9,12 @@ subroutine output(meqn,mbc,nx,xlower,dx,q,t,iframe,aux,maux)
       integer, parameter :: ndim=2
       integer, intent(in) :: nx(ndim)
       double precision :: q(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
-      character*10 fname1, fname2
+      double precision :: aux(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, maux)
+      character*10 fname1, fname2, fname3
       double precision, intent(in) :: xlower(ndim), dx(ndim)
+      logical outaux
+      
+      outaux = .true.
 !
 !     # Write the results to the file fort.q<iframe>
 !     # Use format required by matlab script  plotclaw2.m
@@ -21,11 +25,13 @@ subroutine output(meqn,mbc,nx,xlower,dx,q,t,iframe,aux,maux)
 !
          fname1 = 'fort.qxxxx'
          fname2 = 'fort.txxxx'
+         fname3 = 'fort.axxxx'
          nstp = iframe
          do 55 ipos = 10, 7, -1
             idigit = mod(nstp,10)
             fname1(ipos:ipos) = char(ichar('0') + idigit)
             fname2(ipos:ipos) = char(ichar('0') + idigit)
+            fname3(ipos:ipos) = char(ichar('0') + idigit)
             nstp = nstp / 10
  55      continue
 
@@ -68,6 +74,30 @@ subroutine output(meqn,mbc,nx,xlower,dx,q,t,iframe,aux,maux)
         write(50,*) ' '
  20     continue
       write(50,*) ' '
+      
+      
+      if (outaux) then 
+!     # also output the aux arrays:
+      open(unit=70,file=fname3,status='unknown',form='formatted')
+      write(70,1001) mptr,level,nx(1),nx(2)
+      write(70,1002) xlower(1),xlower(2),dx(1),dx(2)
+      do 120 j=1,nx(2)
+         do 110 i=1,nx(1)
+            do m=1,maux
+!              # exponents with more than 2 digits cause problems reading
+!              # into matlab... reset tiny values to zero:
+               if (dabs(aux(i,j,m)) .lt. 1d-99) aux(i,j,m) = 0.d0
+            enddo
+!
+            write(70,1005) (aux(i,j,m), m=1,maux)
+!
+  110       continue
+         write(70,*) ' '
+  120    continue
+      write(70,*) ' '
+      close(unit=70)
+      endif
+
 
       write(60,1000) t,meqn,ngrids,maux,2
  1000 format(e26.16,'    time', /, &
