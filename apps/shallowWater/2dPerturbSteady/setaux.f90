@@ -32,7 +32,7 @@
 	do i=1-mbc,mx(1)+mbc
 		xCell = xlower(1) + (i-0.5d0)*dx(1)
     	do j=1-mbc,mx(2)+mbc
-    		yCell = xlower(2) + (j-0.5d0)*dx(1)
+    		yCell = xlower(2) + (j-0.5d0)*dx(2)
     		aux(i,j,1) = 0.8d0*dexp(-5.d0*(xCell-0.9d0)**2-50.d0*(yCell-0.5d0)**2)
     	enddo
     enddo
