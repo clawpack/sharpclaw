@@ -35,7 +35,7 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
    
     do j = 0,nx(2)+1
 
-        ! copy data along a slice into 1d arrays:
+        ! copy auxiliary data along a slice into 1d arrays:
         q1dp => q(:,j,:)
         if (maux .gt. 0)  then
             auxp => aux(:,j,:)
@@ -65,7 +65,7 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     ! ==================
 
     do i = 0, nx(1)+1
-        ! copy data along a slice into 1d arrays:
+        ! copy auxiliary data along a slice into 1d arrays:
         q1dp => q(i,:,:)
         forall(j=1-mbc:nx(2)+mbc, m=1:meqn)
             g%q1d(j,m) = q(i,j,m)

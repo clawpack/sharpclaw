@@ -5,7 +5,7 @@
 ! # Set problem parameters for the following 1D shallow water equations 
 ! #
 ! # (h)_t + (h*u)_x = 0
-! # (hu)_t + (h*u^2 + 1/2*grav*h^2) = -grav*h*(b)_x
+! # (hu)_t + (h*u^2 + 1/2*grav*h^2)_x = -grav*h*(b)_x
 ! #
 ! # where b=b(x) represents the bottom topography.
 !

@@ -5,7 +5,7 @@ c =========================================================
 c
 c # Solve Riemann problems for the 1D shallow water equations
 c # (h)_t + (h*u)_x = 0
-c # (hu)_t + (h*u^2 + 1/2*grav*h^2) = -grav*h*(b)_x
+c # (hu)_t + (h*u^2 + 1/2*grav*h^2)_x = -grav*h*(b)_x
 c # using q-wave algorithm and Roe's approximate Riemann solver 
 c # with entropy fix for transonic rarefractions.  
 c #

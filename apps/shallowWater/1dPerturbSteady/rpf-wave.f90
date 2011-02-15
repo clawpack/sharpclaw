@@ -4,7 +4,7 @@
 !
 ! # Solve Riemann problems for the 1D shallow water equations
 ! # (h)_t + (h*u)_x = 0
-! # (hu)_t + (h*u^2 + 1/2*grav*h^2) = -grav*h*(b)_x
+! # (hu)_t + (h*u^2 + 1/2*grav*h^2)_x = -grav*h*(b)_x
 ! # using f-wave algorithm and Roe's approximate Riemann solver.  
 ! #
 ! # With the f-wave approach the source term in the discharge equation 
