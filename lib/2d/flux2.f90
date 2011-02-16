@@ -25,9 +25,10 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     integer :: i,j,m
     double precision :: cfl1d
     double precision, pointer :: auxp(:,:),q1dp(:,:)
+    
+    integer :: ii, jj, mm
 
     cfl = 0.d0
-    dq=0.d0
 
     ! perform x-sweeps
     ! ==================
@@ -40,6 +41,7 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
         if (maux .gt. 0)  then
             auxp => aux(:,j,:)
         endif
+
 
         ! compute modification dq1d along this slice:
         call flux1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,1)
