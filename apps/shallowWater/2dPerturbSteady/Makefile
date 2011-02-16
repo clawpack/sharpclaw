@@ -40,7 +40,7 @@ CLAW_SOURCES = \
   setprob.f90 \
   setaux.f90 \
   out2-PertSW.f90 \
-  rpnq-wave.f \
+  rpf-wave.f \
   src2.f90  
 
 # Clawpack library to be used:

@@ -63,22 +63,22 @@
 		uhat = (dsqrt(hl)*ul + dsqrt(hr)*ur)/(dsqrt(hl)+dsqrt(hr))
 		chat = dsqrt(grav*hbar)
 		
-		! # Flux differences + discretized source term
+		! # Flux differences
 		fluxDiff(1) = (hr*ur) - (hl*ul)
-		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr*hr) - (hl*ul*ul + 0.5*grav*hl*hl) 
+		fluxDiff(2) = (hr*ur*ur + 0.5*grav*hr**2) - (hl*ul*ul + 0.5*grav*hl**2) 
 		
 		! # Wave speeds
 		s(i,1) = uhat-chat
 		s(i,2) = uhat+chat
 		
-		! # Right eigenvectors
+		! # Right eigenvectors (column)
 		R(1,1) = 1.d0
 		R(2,1) = uhat-chat
 		
 		R(1,2) = 1.d0
 		R(2,2) = uhat+chat
 	
-	
+		! # Left eigenvectors (rows)
 	    L(1,1) = (chat+uhat)/(2.d0*chat)
 		L(2,1) = (chat-uhat)/(2.d0*chat)
 		

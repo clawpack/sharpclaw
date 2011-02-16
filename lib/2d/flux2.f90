@@ -26,7 +26,6 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
     double precision :: cfl1d
     double precision, pointer :: auxp(:,:),q1dp(:,:)
     
-    integer :: ii, jj, mm
 
     cfl = 0.d0
 
