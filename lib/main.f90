@@ -17,8 +17,10 @@ program sharpclaw_main
     use Global
     use reconstruct
     use reconstructmd
+    
     implicit none
-    external bc,tfluct,rp,src,b4step
+    
+    external bc,tfluct,rp,src,b4step  !!!External Procedures (Functions or Subroutines)!!!
     
     integer :: mx,stat,i,n,nstepout,mw,nstop,iframe,info,md
     integer :: nout,outstyle
@@ -185,6 +187,7 @@ program sharpclaw_main
             case(3)
                 tend = tstart - 1.d0  !# single-step mode
         end select
+        
 
         call sharpclaw(tstart,tend,cfl_maxused,cfl_last,dt_minused, &
                 dt_maxused,dt_last,steps_taken,info,dt_initial,dt_max, &

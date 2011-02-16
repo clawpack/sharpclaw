@@ -21,7 +21,7 @@
 
   	double precision, intent(in) :: q(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc,  meqn)
 	double precision, intent(out) :: dq(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, meqn)
-  	double precision :: aux(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, *)
+  	double precision :: aux(1-mbc:nx(1)+mbc, 1-mbc:nx(2)+mbc, maux)
   	double precision :: dt, t
   	
   	
@@ -35,6 +35,8 @@
   	do i=1,nx(1)
   		do j=1,nx(2)
     		dq(i,j,1) = 0.d0
+    		!dq(i,j,2) = 0.d0
+    		!dq(i,j,3) = 0.d0
     		b_x = (aux(i,j,1)-aux(i-1,j,1))/dx(1)
     		dq(i,j,2) = -1.0d0*grav*q(i,j,1)*b_x*dt !src = -g*h*(bottom)_x
     		b_y = (aux(i,j,1)-aux(i,j-1,1))/dx(2)

@@ -29,18 +29,25 @@ def setplot(plotdata):
 
     # Set up for axes in this figure:
     plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [0, 2.0]
-    plotaxes.ylimits = [0.0, 1.0]
+    plotaxes.xlimits = [-6.0, 6.0]
+    plotaxes.ylimits = [-3.0, 3.0]
     plotaxes.title = 'q[0]'
     plotaxes.scaled = True
 
     # Set up for item on these axes:
-    plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
+    plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
     plotitem.plot_var = 0
-    plotitem.contour_min = 0.99942
-    plotitem.contour_max = 1.00656
-    plotitem.contour_colors = 'k'
+    plotitem.pcolor_cmap = colormaps.red_yellow_blue
+    plotitem.pcolor_cmin = 0.9
+    plotitem.pcolor_cmax = 1.01
+    plotitem.add_colorbar = True
     plotitem.show = True       # show on plot?
+    #plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
+    #plotitem.plot_var = 0
+    #plotitem.contour_min = 0.99942
+    #plotitem.contour_max = 1.00656
+    #plotitem.contour_colors = 'k'
+    #plotitem.show = True       # show on plot?
     
 
     # Scatter plot of q[0]

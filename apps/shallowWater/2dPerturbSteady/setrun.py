@@ -35,11 +35,8 @@ def setrun(claw_pkg='sharpclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
-    probdata.add_param('grav',      1.0,        'Gravitational constant')
+    probdata.add_param('grav',      9.81,        'Gravitational constant')
     probdata.add_param('eps',       0.01,        'Perturbation')
-    #probdata.add_param('r0',        0.5,        'Initial radius')
-    #probdata.add_param('hin',       2.0,        'Internal height')
-    #probdata.add_param('hout',      1.0,        'External height')
  
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -55,16 +52,16 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.ndim = 2
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = 0.0
-    clawdata.xupper = 2.0
+    clawdata.xlower = -6.0
+    clawdata.xupper = 6.0
     
-    clawdata.ylower = 0.0
-    clawdata.yupper = 1.0
+    clawdata.ylower = -3.0
+    clawdata.yupper = 3.0
         
 
     # Number of grid cells:
-    clawdata.mx = 25
-    clawdata.my = 25
+    clawdata.mx = 200
+    clawdata.my = 100
         
 
     # ---------------
@@ -106,7 +103,7 @@ def setrun(claw_pkg='sharpclaw'):
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
-        clawdata.tout =  [0.12, 0.24, 0.36, 0.48, 0.6]   # used if outstyle == 2
+        clawdata.tout =  [0.12]   # used if outstyle == 2
         clawdata.nout = len(clawdata.tout)
 
     elif clawdata.outstyle == 3:
@@ -145,11 +142,11 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.5
-    clawdata.cfl_max = 0.7
+    clawdata.cfl_desired = 0.2
+    clawdata.cfl_max = 0.3
     
     # Maximum number of time steps to allow between output times:
-    clawdata.max_steps = 500
+    clawdata.max_steps = 5000
 
     
     
@@ -169,9 +166,6 @@ def setrun(claw_pkg='sharpclaw'):
     # Required:  len(mthlim) == mwaves
     clawdata.mthlim = [5, 5, 5]
 
-    # Limiter type: 0=None, 1=TVD, 2=WENO
-    clawdata.lim_type = 2
-
     #User-supplied total fluctuation solver?
     clawdata.tfluct_solver = 0
 
@@ -179,7 +173,10 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.char_decomp = 0
 
     # Source terms? NOT USED!!!!
-    clawdata.src_term = 0
+    clawdata.src_term = 1
+    
+    # Limiter type: 0=None, 1=TVD, 2=WENO
+    clawdata.lim_type = 2
 
     
     

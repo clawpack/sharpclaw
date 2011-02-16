@@ -98,7 +98,7 @@ def setrun(claw_pkg='sharpclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 10
-        clawdata.tfinal = 10.
+        clawdata.tfinal = 10.0
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  

@@ -23,7 +23,7 @@
   	double precision :: xlower(2), dx(2)
 
   	double precision, intent(out) :: q(1-mbc:mx(1)+mbc, 1-mbc:mx(2)+mbc, meqn)
-  	double precision :: aux(1-mbc:mx(1)+mbc,1-mbc:mx(2)+mbc, *)
+  	double precision :: aux(1-mbc:mx(1)+mbc,1-mbc:mx(2)+mbc, maux)
   
  	double precision :: eps
   	common /perturb/ eps
@@ -31,17 +31,16 @@
     integer :: i, j
 	double precision :: xCell, yCell
 	
-	write(*,*) eps
-	
+
 	do i=1-mbc,mx(1)+mbc
 		xCell = xlower(1) + (i-0.5d0)*dx(1)
     	do j=1-mbc,mx(2)+mbc	
-    		yCell = xlower(2) + (j-0.5d0)*dx(1)
+    		yCell = xlower(2) + (j-0.5d0)*dx(2)
     		
     		if (xCell .ge. 0.05d0 .and. xCell .le. 0.15d0) then
-				q(i,j,1) = 1.0d0 - aux(i,j,1) + eps
+				q(i,j,1) = 1.0d0 - aux(i,j,1) !+ eps
 			else
-				q(i,j,1) = 1.00d0 - aux(i,j,1)
+				q(i,j,1) = 1.0d0 - aux(i,j,1)
 			endif
 
 			q(i,j,2) = 0.d0 !h*u

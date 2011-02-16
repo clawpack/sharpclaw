@@ -24,7 +24,7 @@
 	integer :: maxmx, mbc, maux
 	integer :: mx(2)
 	double precision :: xlower(2), dx(2)
-    double precision :: aux(1-mbc:mx(1)+mbc,1-mbc:mx(2)+mbc, *)
+    double precision :: aux(1-mbc:mx(1)+mbc,1-mbc:mx(2)+mbc, maux)
     
     integer :: i, j
 	double precision :: xCell, yCell
