@@ -39,9 +39,9 @@ CLAW_SOURCES = \
   qinit.f90 \
   setprob.f90 \
   setaux.f90 \
-  out2-PertSW.f90 \
   rpf-wave.f \
-  src2.f90  
+  out2-PertSW.f90 \
+  tfluctf-wave.f90
 
 # Clawpack library to be used:
 CLAW_LIB = $(SCLAW)/lib
@@ -64,8 +64,10 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/b4step.f90 \
   $(CLAW_LIB)/evec.f90 \
   $(CLAW_LIB)/opendatafile.f \
-  $(CLAW_LIB)/tfluct.f90
-
+  $(CLAW_LIB)/2d/src2.f90 \
+  #$(CLAW_LIB)/tfluct.f90 \
+ 
+ 
 #-------------------------------------------------------------------
 # Include Makefile containing standard definitions and make options:
 include $(SCLAWMAKE)

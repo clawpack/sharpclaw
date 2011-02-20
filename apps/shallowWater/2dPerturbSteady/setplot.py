@@ -29,8 +29,8 @@ def setplot(plotdata):
 
     # Set up for axes in this figure:
     plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [-6.0, 6.0]
-    plotaxes.ylimits = [-3.0, 3.0]
+    plotaxes.xlimits = [-2.0, 2.0]
+    plotaxes.ylimits = [0.0, 1.0]
     plotaxes.title = 'q[0]'
     plotaxes.scaled = True
 
@@ -38,8 +38,8 @@ def setplot(plotdata):
     plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
     plotitem.plot_var = 0
     plotitem.pcolor_cmap = colormaps.red_yellow_blue
-    plotitem.pcolor_cmin = 0.9
-    plotitem.pcolor_cmax = 1.01
+    #plotitem.pcolor_cmin = 0.5
+    #plotitem.pcolor_cmax = 1.5
     plotitem.add_colorbar = True
     plotitem.show = True       # show on plot?
     #plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
@@ -55,7 +55,7 @@ def setplot(plotdata):
 
     # Set up for axes in this figure:
     plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [0., 2.5]
+    plotaxes.xlimits = [0., 2.0]
     plotaxes.ylimits = [0., 2.1]
     plotaxes.title = 'Scatter plot of h'
 

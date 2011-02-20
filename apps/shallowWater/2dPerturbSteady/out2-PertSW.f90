@@ -66,6 +66,7 @@
       do 20 j=1,nx(2)
         do 10 i=1,nx(1)
           do m=1,meqn
+          	 physVar(i,j,m)=q(i,j,m)
           	 physVar(i,j,1)=q(i,j,1)+aux(i,j,1)
 !            # exponents with more than 2 digits cause problems reading
 !            # into matlab... reset tiny values to zero:

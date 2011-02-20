@@ -1,5 +1,5 @@
 ! ================================================================================
-	subroutine rp(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,fwave,s,amdq,apdq)
+	subroutine tfluct(ixy,maxmx,meqn,mwaves,mbc,mx,ql,qr,auxl,auxr,s,adq)
 ! ================================================================================
 
 ! # Solve Riemann problems for the 2D shallow water equations
@@ -38,6 +38,7 @@
     double precision :: fwave(1-mbc:maxmx+mbc, meqn, mwaves)
     double precision :: amdq(1-mbc:maxmx+mbc, meqn)
     double precision :: apdq(1-mbc:maxmx+mbc, meqn)
+    double precision :: adq(1-mbc:maxmx+mbc, meqn)
     
     
     double precision :: grav
@@ -74,16 +75,16 @@
 	!Now, it is possible to loop over the cells in this slice
     do i=2-mbc,mx+mbc
       	! # Left states
-		hl = qr(i-1,1)
-		ul = qr(i-1,2)/hl
-		vl = qr(i-1,3)/hl
-		bl = auxr(i-1,1)
+		hl = ql(i,1)
+		ul = ql(i,2)/hl
+		vl = ql(i,3)/hl
+		bl = auxl(i,1)
 		
 		! # Right states
-		hr = ql(i,1)
-		ur = ql(i,2)/hr
-		vr = ql(i,3)/hr
-		br = auxl(i,1)
+		hr = qr(i,1)
+		ur = qr(i,2)/hr
+		vr = qr(i,3)/hr
+		br = auxr(i+1,1)
 	
 		! # Average states (they come from the Roe's linearization)
 		hbar = 1.d0/2.d0*(hr+hl)
@@ -108,9 +109,9 @@
 		! #
 		! # Using the vector component n_1 and n_2 defined above,
 		! # this two possibilities can be achieved in the following way:
-		fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2)+0.5*grav*hr**2*n_1)-(hl*ul*(ul*n_1 + vl*n_2)+0.5*grav*hl**2*n_1)+grav*hbar*(br-bl)*n_1
+		fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2) + 0.5*grav*hr**2*n_1) - (hl*ul*(ul*n_1 + vl*n_2) + 0.5*grav*hl**2*n_1)
 		
-		fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2)+0.5*grav*hr**2*n_2)-(hl*vl*(ul*n_1 + vl*n_2)+0.5*grav*hl**2*n_2)+grav*hbar*(br-bl)*n_2
+		fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2) + 0.5*grav*hr**2*n_2) - (hl*vl*(ul*n_1 + vl*n_2) + 0.5*grav*hl**2*n_2) 
 		
 		! # Wave speeds
 		s(i,1) = (uhat*n_1 + vhat*n_2) - chat
@@ -177,7 +178,11 @@
 			enddo
 		enddo
 		
+		do j=1,meqn
+			adq(i,j)=amdq(i,j) + apdq(i,j)
+		enddo
+		
 	enddo
 	
 	return
-	end subroutine rp
+	end subroutine tfluct

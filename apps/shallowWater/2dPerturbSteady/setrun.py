@@ -52,17 +52,16 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.ndim = 2
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = -6.0
-    clawdata.xupper = 6.0
+    clawdata.xlower = -2.0
+    clawdata.xupper = 2.0
     
-    clawdata.ylower = -3.0
-    clawdata.yupper = 3.0
+    clawdata.ylower = 0.0
+    clawdata.yupper = 1.0
         
 
     # Number of grid cells:
-    clawdata.mx = 200
-    clawdata.my = 100
-        
+    clawdata.mx = 150
+    clawdata.my = 75    
 
     # ---------------
     # Size of system:
@@ -94,12 +93,12 @@ def setrun(claw_pkg='sharpclaw'):
     # Note that the time integration stops after the final output time.
     # The solution at initial time t0 is always written in addition.
 
-    clawdata.outstyle = 2
+    clawdata.outstyle = 1
 
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 10
-        clawdata.tfinal = 0.6
+        clawdata.tfinal = 0.12
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
@@ -142,8 +141,8 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.2
-    clawdata.cfl_max = 0.3
+    clawdata.cfl_desired = 0.1
+    clawdata.cfl_max = 0.2
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 5000
@@ -156,7 +155,7 @@ def setrun(claw_pkg='sharpclaw'):
     # ------------------
 
     # Time integrator
-    clawdata.time_integrator = 4
+    clawdata.time_integrator = 2
 
     
     # Number of waves in the Riemann solution:
@@ -173,7 +172,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.char_decomp = 0
 
     # Source terms? NOT USED!!!!
-    clawdata.src_term = 1
+    clawdata.src_term = 0
     
     # Limiter type: 0=None, 1=TVD, 2=WENO
     clawdata.lim_type = 2
