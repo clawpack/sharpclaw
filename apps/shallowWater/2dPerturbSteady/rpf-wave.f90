@@ -85,17 +85,17 @@
 		vr = ql(i,3)/hr
 		br = auxl(i,1)
 	
-		! # Average states (they come from the Roe's linearization)
-		hbar = 1.d0/2.d0*(hr+hl)
-		uhat = (dsqrt(hl)*ul + dsqrt(hr)*ur)/(dsqrt(hl)+dsqrt(hr)) 
-		vhat = (dsqrt(hl)*vl + dsqrt(hr)*vr)/(dsqrt(hl)+dsqrt(hr))
+		! # Roe average states (Roe's linearization)
+		hbar = 1.d0/2.d0*(hr + hl)
+		uhat = (dsqrt(hr)*ur + dsqrt(hl)*ul)/(dsqrt(hr) + dsqrt(hl)) 
+		vhat = (dsqrt(hr)*vr + dsqrt(hl)*vl)/(dsqrt(hr) + dsqrt(hl))
 		chat = dsqrt(grav*hbar)
 		
 		! # Flux differences
 		! ##################
 		! # In order to compute these differences in an efficient way (avoid if statements)
 		! # we compute the scalar product between the velocity vector at the interface and the
-		! # normal vector n which has been defined before the loop over the cells.
+		! # normal vector "{n} = {n_1,n_2}^T" which has been defined above.
 		fluxDiff(1) = hr*(ur*n_1 + vr*n_2) - hl*(ul*n_1 + vl*n_2) ! Easy to understand
 		
 		! # If the slice is in the y-direction we have:
@@ -108,9 +108,9 @@
 		! #
 		! # Using the vector component n_1 and n_2 defined above,
 		! # this two possibilities can be achieved in the following way:
-		fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2)+0.5*grav*hr**2*n_1)-(hl*ul*(ul*n_1 + vl*n_2)+0.5*grav*hl**2*n_1)+grav*hbar*(br-bl)*n_1
+		fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2)+0.5*grav*hr*hr*n_1)-(hl*ul*(ul*n_1 + vl*n_2)+0.5*grav*hl*hl*n_1)!+grav*hbar*(br-bl)*n_1
 		
-		fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2)+0.5*grav*hr**2*n_2)-(hl*vl*(ul*n_1 + vl*n_2)+0.5*grav*hl**2*n_2)+grav*hbar*(br-bl)*n_2
+		fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2)+0.5*grav*hr*hr*n_2)-(hl*vl*(ul*n_1 + vl*n_2)+0.5*grav*hl*hl*n_2)!+grav*hbar*(br-bl)*n_2
 		
 		! # Wave speeds
 		s(i,1) = (uhat*n_1 + vhat*n_2) - chat
@@ -134,13 +134,13 @@
 		! # Left eigenvectors (rows)
 	    L(1,1) = ((uhat*n_1 + vhat*n_2) + chat)/(2.d0*chat)
 	    L(1,2) = -n_1/(2.d0*chat)
-	    L(1,2) = -n_2/(2.d0*chat)
+	    L(1,3) = -n_2/(2.d0*chat)
 	    
 		L(2,1) = uhat*n_2 - vhat*n_1 
 		L(2,2) = -n_2
 		L(2,3) = n_1
 		
-		L(3,1) = ((uhat*n_1 + vhat*n_2) - chat)/(2.d0*chat)
+		L(3,1) = (chat - (uhat*n_1 + vhat*n_2))/(2.d0*chat)
 		L(3,2) = n_1/(2.d0*chat)
 		L(3,3) = n_2/(2.d0*chat)
 		

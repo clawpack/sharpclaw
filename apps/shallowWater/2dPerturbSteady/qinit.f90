@@ -38,9 +38,9 @@
     		yCell = xlower(2) + (j-0.5d0)*dx(2)
     		
     		if (xCell .ge. 0.05d0 .and. xCell .le. 0.15d0) then
-				q(i,j,1) = 1.0d0 - aux(i,j,1) + eps
+				q(i,j,1) = 1.0d0 + eps!- aux(i,j,1) + eps
 			else
-				q(i,j,1) = 1.0d0 - aux(i,j,1)
+				q(i,j,1) = 1.0d0 !- aux(i,j,1)
 			endif
 
 			!q(i,j,1) = 1.d0

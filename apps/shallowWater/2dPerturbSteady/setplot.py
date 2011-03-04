@@ -29,7 +29,7 @@ def setplot(plotdata):
 
     # Set up for axes in this figure:
     plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [-2.0, 2.0]
+    plotaxes.xlimits = [0.0, 2.0]
     plotaxes.ylimits = [0.0, 1.0]
     plotaxes.title = 'q[0]'
     plotaxes.scaled = True

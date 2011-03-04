@@ -124,7 +124,7 @@
 		R(3,1) = vhat - chat*n_2
 		
 		R(1,2) = 0.d0
-		R(2,2) = -n_2
+		R(2,2) = -1.d0*n_2
 		R(3,2) = n_1
 		
 		R(1,3) = 1.d0
@@ -134,14 +134,14 @@
 	
 		! # Left eigenvectors (rows)
 	    L(1,1) = ((uhat*n_1 + vhat*n_2) + chat)/(2.d0*chat)
-	    L(1,2) = -n_1/(2.d0*chat)
-	    L(1,2) = -n_2/(2.d0*chat)
+	    L(1,2) = -1.d0*n_1/(2.d0*chat)
+	    L(1,3) = -1.d0*n_2/(2.d0*chat)
 	    
 		L(2,1) = uhat*n_2 - vhat*n_1 
-		L(2,2) = -n_2
+		L(2,2) = -1.d0*n_2
 		L(2,3) = n_1
 		
-		L(3,1) = ((uhat*n_1 + vhat*n_2) - chat)/(2.d0*chat)
+		L(3,1) = (chat - (uhat*n_1 + vhat*n_2))/(2.d0*chat)
 		L(3,2) = n_1/(2.d0*chat)
 		L(3,3) = n_2/(2.d0*chat)
 		
