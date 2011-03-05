@@ -38,14 +38,14 @@ def setplot(plotdata):
     #plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
     #plotitem.plot_var = 0
     #plotitem.pcolor_cmap = colormaps.red_yellow_blue
-    #plotitem.pcolor_cmin = 0.5
-    #plotitem.pcolor_cmax = 1.5
+    #plotitem.pcolor_cmin = 0.8
+    #plotitem.pcolor_cmax = 1.2
     #plotitem.add_colorbar = True
     #plotitem.show = True       # show on plot?
     plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
     plotitem.plot_var = 0
-    plotitem.contour_min = 1.0
-    plotitem.contour_max = 1.00656
+    plotitem.contour_min = 0.99318
+    plotitem.contour_max = 1.01659
     plotitem.contour_colors = 'k'
     plotitem.show = True       # show on plot?
     
