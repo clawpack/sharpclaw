@@ -38,10 +38,10 @@
             dq(i,j,1) = 0.d0
             !dq(i,j,2) = 0.d0
             !dq(i,j,3) = 0.d0
-            b_x = (aux(i+1,j,1)-aux(i-1,j,1))/(2*dx(1))
-            dq(i,j,2) = -1.0d0*grav*q(i,j,1)*b_x*dt !src = -g*h*(bottom)_x
-            b_y = (aux(i,j+1,1)-aux(i,j-1,1))/(2*dx(2))
-            dq(i,j,3) = -1.0d0*grav*q(i,j,1)*b_y*dt !src = -g*h*(bottom)_y
+            !b_x = (aux(i+1,j,1)-aux(i-1,j,1))/(2*dx(1))
+            !dq(i,j,2) = -1.0d0*grav*q(i,j,1)*b_x*dt !src = -g*h*(bottom)_x
+            !b_y = (aux(i,j+1,1)-aux(i,j-1,1))/(2*dx(2))
+            !dq(i,j,3) = -1.0d0*grav*q(i,j,1)*b_y*dt !src = -g*h*(bottom)_y
         enddo
     enddo
   

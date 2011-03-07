@@ -44,8 +44,8 @@ def setplot(plotdata):
     #plotitem.show = True       # show on plot?
     plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
     plotitem.plot_var = 0
-    plotitem.contour_min = 0.99318
-    plotitem.contour_max = 1.01659
+    plotitem.contour_min = 0.99942
+    plotitem.contour_max = 1.00656
     plotitem.contour_colors = 'k'
     plotitem.show = True       # show on plot?
     

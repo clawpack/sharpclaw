@@ -1,6 +1,6 @@
 ! ===================================================================
 !  Program: 	SharpClaw
-!  File:   	main.f95
+!  File:   	main.f90
 ! ===================================================================
 
 !     Documentation is available at
@@ -9,6 +9,14 @@
 !     Author: David I. Ketcheson
 !     Version of October, 2008 --  SharpClaw Version 0.3
 !
+! ===================================================================
+!
+! Add here some info about modifications.
+!
+! Modified: March 7, 2011
+! Author:   Matteo Parsani
+!
+! ===================================================================
 
 program sharpclaw_main
     
@@ -81,12 +89,6 @@ program sharpclaw_main
     read(55,*) cfl_desired
     read(55,*) max_steps
 
-!    write(*,*) dt_initial
-!    write(*,*) dt_max
-!    write(*,*) cfl_max
-!    write(*,*) cfl_desired
-!    write(*,*) max_steps
-
     ! input parameters for clawpack routines
     read(55,*) dt_variable
     read(55,*) time_integrator
@@ -122,7 +124,7 @@ program sharpclaw_main
     ! close the file
     close(55)
 
-    ! Allocate q and aux
+    ! Allocate q and aux based on the spatial dimensions of the problem
     call qalloc(mbc,nx,meqn,maux,r1,r2,time_integrator)
 
     ! Work array allocations
@@ -153,8 +155,6 @@ program sharpclaw_main
     if (outstyle .eq. 1) then
         dtout = (tfinal - t0)/float(nout)
     endif
-
-    mx=nx(1)
 
     ! call users routine setprob to set any specific parameters
     ! or other initialization required.
@@ -198,18 +198,12 @@ program sharpclaw_main
         ! check to see if an error occured:
         if (info .ne. 0) then
             write(6,*) '*** ERROR in sharpclaw ***  info =',info
-            if (info.eq.1) then
-               write(6,*) '***   either mx > mx or mbc < 2'
-               endif
             if (info.eq.2) then
                write(6,*) '***   dt does not divide (tend - tstart)'
                write(6,*) '***   and dt is fixed since dt_variable=0'
                endif
             if (info.eq.3) then
                write(6,*) '***   dt_variable=1 and cfl_desired > cfl_max'
-               endif
-            if (info.eq.4) then
-               write(6,*) '***   mwork is too small'
                endif
             if (info.eq.11) then
                write(6,*) '***   Too many times steps, n > max_steps'
