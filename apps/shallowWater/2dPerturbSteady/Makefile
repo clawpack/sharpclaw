@@ -36,14 +36,15 @@ CLAW_LIBDIMENSION = /2d
 
     
 CLAW_SOURCES = \
+  flux1.f90 \
   qinit.f90 \
   setprob.f90 \
   setaux.f90 \
   rpf-wave.f90 \
-  out2-PertSW.f90 \
   tfluctf-wave.f90\
   bc2.f90\
-  src2.f90
+  src2.f90\
+  #out2-PertSW.f90 \
 
 # Clawpack library to be used:
 CLAW_LIB = $(SCLAW)/lib
@@ -58,16 +59,16 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/sharpclaw.f90 \
   $(CLAW_LIB)/2d/qalloc2.f90 \
   $(CLAW_LIB)/2d/step2d.f90 \
-  $(CLAW_LIB)/flux1.f90 \
   $(CLAW_LIB)/2d/flux2.f90 \
   $(CLAW_LIB)/2d/flux2md.f90 \
   $(CLAW_LIB)/polyrecon.f90 \
   $(CLAW_LIB)/b4step.f90 \
   $(CLAW_LIB)/evec.f90 \
   $(CLAW_LIB)/opendatafile.f \
+  $(CLAW_LIB)/2d/out2.f90 \
+  #$(CLAW_LIB)/flux1.f90 \
   #$(CLAW_LIB)/2d/src2.f90 \
   #$(CLAW_LIB)/2d/bc2.f \
-  #$(CLAW_LIB)/2d/out2.f90 \
   #$(CLAW_LIB)/tfluct.f90 \
  
  

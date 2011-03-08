@@ -52,16 +52,16 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.ndim = 2
     
     # Lower and upper edge of computational domain:
-    clawdata.xlower = 0.0
-    clawdata.xupper = 2.0
+    clawdata.xlower = -1.0
+    clawdata.xupper = 3.0
     
-    clawdata.ylower = 0.0
+    clawdata.ylower = -1.0
     clawdata.yupper = 1.0
         
 
     # Number of grid cells:
-    clawdata.mx = 600
-    clawdata.my = 300
+    clawdata.mx = 100
+    clawdata.my = 50
 
     # ---------------
     # Size of system:
@@ -71,7 +71,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.meqn = 3
 
     # Number of auxiliary variables in the aux array (initialized in setaux)
-    clawdata.maux = 1
+    clawdata.maux = 2
     
     # Index of aux array corresponding to capacity function, if there is one:
     clawdata.mcapa = 0
@@ -98,7 +98,7 @@ def setrun(claw_pkg='sharpclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 20
-        clawdata.tfinal = 0.6
+        clawdata.tfinal = 1.0
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
@@ -141,8 +141,8 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.5
-    clawdata.cfl_max = 0.6
+    clawdata.cfl_desired = 0.3
+    clawdata.cfl_max = 0.4
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 5000
