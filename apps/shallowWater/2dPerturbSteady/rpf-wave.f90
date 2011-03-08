@@ -125,7 +125,7 @@
 		R(3,1) = vhat - chat*n_2
 		
 		R(1,2) = 0.d0
-		R(2,2) = -n_2
+		R(2,2) = -1.d0*n_2
 		R(3,2) = n_1
 		
 		R(1,3) = 1.d0
@@ -135,11 +135,11 @@
 	
 		! # Left eigenvectors (rows)
 	    L(1,1) = ((uhat*n_1 + vhat*n_2) + chat)/(2.d0*chat)
-	    L(1,2) = -n_1/(2.d0*chat)
-	    L(1,3) = -n_2/(2.d0*chat)
+	    L(1,2) = -1.d0*n_1/(2.d0*chat)
+	    L(1,3) = -1.d0*n_2/(2.d0*chat)
 	    
 		L(2,1) = uhat*n_2 - vhat*n_1 
-		L(2,2) = -n_2
+		L(2,2) = -1.d0*n_2
 		L(2,3) = n_1
 		
 		L(3,1) = (chat - (uhat*n_1 + vhat*n_2))/(2.d0*chat)
@@ -168,9 +168,9 @@
 			amdq(i,j) = 0.d0
 			apdq(i,j) = 0.d0
 			do k=1,meqn
-				if (s(i,k) .lt. 0.d0) then
+				if (s(i,k) .lt. 1.0e-10) then
 					amdq(i,j) = amdq(i,j) + fwave(i,j,k)
-				elseif (s(i,k) .ge. 0.d0) then
+				elseif (s(i,k) .gt. 1.0e-10) then
 					apdq(i,j) = apdq(i,j) + fwave(i,j,k)
 				else
 					amdq(i,j) = amdq(i,j) + 1.d0/2.d0*fwave(i,j,k)

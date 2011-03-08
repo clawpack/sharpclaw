@@ -109,11 +109,11 @@
 		! #
 		! # Using the vector component n_1 and n_2 defined above,
 		! # this two possibilities can be achieved in the following way:
-    fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2) + 0.5*grav*hr**2*n_1) - (hl*ul*(ul*n_1 + vl*n_2) + 0.5*grav*hl**2*n_1) !&
-                  !& + grav*hbar*(br-bl)/2*n_1
+    fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2) + 0.5*grav*hr**2*n_1) - (hl*ul*(ul*n_1 + vl*n_2) + 0.5*grav*hl**2*n_1) &
+                  & + grav*hbar*(br-bl)/2*n_1
     
-    fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2) + 0.5*grav*hr**2*n_2) - (hl*vl*(ul*n_1 + vl*n_2) + 0.5*grav*hl**2*n_2) !& 
-                  !& + grav*hbar*(br-bl)/2*n_2
+    fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2) + 0.5*grav*hr**2*n_2) - (hl*vl*(ul*n_1 + vl*n_2) + 0.5*grav*hl**2*n_2) & 
+                  & + grav*hbar*(br-bl)/2*n_2
  
 		
 		! # Wave speeds
@@ -170,9 +170,9 @@
 			amdq(i,j) = 0.d0
 			apdq(i,j) = 0.d0
 			do k=1,meqn
-				if (s(i,k) .lt. 0.d0) then
+				if (s(i,k) .lt. 1.0e-10) then
 					amdq(i,j) = amdq(i,j) + fwave(i,j,k)
-				elseif (s(i,k) .ge. 0.d0) then
+				elseif (s(i,k) .gt. 1.0e-10) then
 					apdq(i,j) = apdq(i,j) + fwave(i,j,k)
 				else
 					amdq(i,j) = amdq(i,j) + 1.d0/2.d0*fwave(i,j,k)

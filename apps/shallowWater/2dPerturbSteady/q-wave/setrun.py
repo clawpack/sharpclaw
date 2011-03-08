@@ -60,8 +60,8 @@ def setrun(claw_pkg='sharpclaw'):
         
 
     # Number of grid cells:
-    clawdata.mx = 600
-    clawdata.my = 300
+    clawdata.mx = 200
+    clawdata.my = 100
 
     # ---------------
     # Size of system:
@@ -166,7 +166,7 @@ def setrun(claw_pkg='sharpclaw'):
     clawdata.mthlim = [5, 5, 5]
 
     #User-supplied total fluctuation solver?
-    clawdata.tfluct_solver = 1
+    clawdata.tfluct_solver = 0
 
     #Use characteristic decomposition in reconstruction step?
     clawdata.char_decomp = 0
