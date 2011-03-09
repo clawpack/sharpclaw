@@ -84,12 +84,14 @@ subroutine bc(meqn,mbc,nx,xlower,dx,q,maux,aux,t,dt,mthbc)
 
   210 continue
 !     # zero-order extrapolation:
-      do 215 m=1,meqn
+      do 215 m=2,meqn
          do 215 ibc=1,mbc
             do 215 j = 1-mbc, nx(2)+mbc
+               q(nx(1)+ibc,j,1) = q(nx(1),j,1) + aux(nx(1),j,1) - aux(nx(1)+ibc,j,1)  
                q(nx(1)+ibc,j,m) = q(nx(1),j,m)
   215       continue
       go to 299
+      
 
   220 continue
 !     # periodic:  
@@ -129,9 +131,10 @@ subroutine bc(meqn,mbc,nx,xlower,dx,q,maux,aux,t,dt,mthbc)
 !
   310 continue
 !     # zero-order extrapolation:
-      do 315 m=1,meqn
+      do 315 m=2,meqn
          do 315 jbc=1,mbc
             do 315 i = 1-mbc, nx(1)+mbc
+               q(i,1-jbc,1) = q(i,1,1) + aux(i,1,1) - aux(i,1-jbc,1)
                q(i,1-jbc,m) = q(i,1,m)
   315       continue
       go to 399
@@ -177,6 +180,7 @@ subroutine bc(meqn,mbc,nx,xlower,dx,q,maux,aux,t,dt,mthbc)
       do 415 m=1,meqn
          do 415 jbc=1,mbc
             do 415 i = 1-mbc, nx(1)+mbc
+               q(i,nx(2)+jbc,1) = q(i,nx(2),1) + aux(i,nx(2),1) - aux(i,nx(2)+jbc,1)
                q(i,nx(2)+jbc,m) = q(i,nx(2),m)
   415       continue
       go to 499

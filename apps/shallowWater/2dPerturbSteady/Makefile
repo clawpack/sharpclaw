@@ -40,10 +40,11 @@ CLAW_SOURCES = \
   setprob.f90 \
   setaux.f90 \
   rpf-wave.f90 \
-  out2-PertSW.f90 \
   tfluctf-wave.f90\
   bc2.f90\
   src2.f90
+  
+  #out2-PertSW.f90 \
 
 # Clawpack library to be used:
 CLAW_LIB = $(SCLAW)/lib
@@ -65,9 +66,9 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/b4step.f90 \
   $(CLAW_LIB)/evec.f90 \
   $(CLAW_LIB)/opendatafile.f \
+  $(CLAW_LIB)/2d/out2.f90 \
   #$(CLAW_LIB)/2d/src2.f90 \
   #$(CLAW_LIB)/2d/bc2.f \
-  #$(CLAW_LIB)/2d/out2.f90 \
   #$(CLAW_LIB)/tfluct.f90 \
  
  
