@@ -108,11 +108,11 @@
 		! #
 		! # Using the vector component n_1 and n_2 defined above,
 		! # this two possibilities can be achieved in the following way:
-		fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2)+0.5*grav*hr*hr*n_1)-(hl*ul*(ul*n_1 + vl*n_2)+0.5*grav*hl*hl*n_1) !&
-		              !& + grav*hbar*(br-bl)*n_1
+		fluxDiff(2) = (hr*ur*(ur*n_1 + vr*n_2)+0.5*grav*hr*hr*n_1)-(hl*ul*(ul*n_1 + vl*n_2)+0.5*grav*hl*hl*n_1) &
+		              & + grav*hbar*(br-bl)*n_1
 		
-		fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2)+0.5*grav*hr*hr*n_2)-(hl*vl*(ul*n_1 + vl*n_2)+0.5*grav*hl*hl*n_2) !& 
-		              !& + grav*hbar*(br-bl)*n_2
+		fluxDiff(3) = (hr*vr*(ur*n_1 + vr*n_2)+0.5*grav*hr*hr*n_2)-(hl*vl*(ul*n_1 + vl*n_2)+0.5*grav*hl*hl*n_2) & 
+		              & + grav*hbar*(br-bl)*n_2
 		
 		! # Wave speeds
 		s(i,1) = (uhat*n_1 + vhat*n_2) - chat
