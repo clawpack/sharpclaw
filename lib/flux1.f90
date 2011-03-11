@@ -99,6 +99,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
                 call rp(ixy,maxnx,meqn,mwaves,mbc,mx,&
                         q1d,q1d,aux,aux,g%wave,g%s,g%amdq,g%apdq)
                 call weno5_wave(q1d,g%ql,g%qr,g%wave)
+                !call weno5_fwave(q1d,g%ql,g%qr,g%wave,g%s)
             case (2)
                 ! characteristic-wise reconstruction
                 call evec(mx,meqn,mbc,mx,q1d,aux,aux,g%evl,g%evr)
