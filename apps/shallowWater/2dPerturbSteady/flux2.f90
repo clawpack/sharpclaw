@@ -52,12 +52,14 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
             auxp => aux(:,j,:)
         endif
         
-        do i=1-mbc,nx(1)+mbc
-        	tmp = q1dp(i,1) + auxp(i,1)
-    		if (tmp .lt. 1.d0) then
-    			write(*,*) i,j,tmp
-    		endif
-        enddo 
+        !do i=1-mbc,nx(1)+mbc
+        !	tmp = q1dp(i,1) + auxp(i,1)
+    	!	if (tmp .lt. 1.d0) then
+    	!		write(*,*) i,j,tmp
+    	!		write(*,*) 'MI FERMO QUI'
+    	!		stop
+    	!	endif
+        !enddo 
 
         ! compute modification dq1d along this slice:
         call flux1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,1)
@@ -85,27 +87,30 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
 
     do i = 0, nx(1)+1
         ! copy auxiliary data along a slice into 1d arrays:
-        !q1dp => q(i,:,:)
+        q1dp => q(i,:,:)
+        
         !forall(j=1-mbc:nx(2)+mbc, m=1:meqn)
         !    g%q1d(j,m) = q(i,j,m)
         !end forall
 
-        !if (maux .gt. 0)  then
-        !    auxp => aux(i,:,:)
-        !endif
+        if (maux .gt. 0)  then
+            auxp => aux(i,:,:)
+        endif
         
-        do j=1-mbc,nx(2)+mbc
-        	qSliceHelp(j,1) = q(i,j,1) !+ aux(i,j,1)
-        	qSliceHelp(j,2) = q(i,j,2)
-        	qSliceHelp(j,3) = q(i,j,3)
-        	auxSliceHelp(j,1) = aux(i,j,1)
-        	tmp = qSliceHelp(j,1) !+ auxSliceHelp(j,1)
-    		if (tmp .lt. 0.1) then
-    			write(*,*) i,j,tmp
-    		endif
-        enddo 
+        !do j=1-mbc,nx(2)+mbc
+        !	qSliceHelp(j,1) = q(i,j,1) !+ aux(i,j,1)
+        !	qSliceHelp(j,2) = q(i,j,2)
+        !	qSliceHelp(j,3) = q(i,j,3)
+        !	auxSliceHelp(j,1) = aux(i,j,1)
+        !	tmp = qSliceHelp(j,1) + auxSliceHelp(j,1)
+    	!	if (tmp .lt. 0.1) then
+    	!		write(*,*) i,j,tmp
+    	!	endif
+        !enddo 
 
-        call flux1(qSliceHelp,g,g%dq1d,auxSliceHelp,dt,cfl1d,t,rp,tfluct,2)
+        !call flux1(qSliceHelp,g,g%dq1d,auxSliceHelp,dt,cfl1d,t,rp,tfluct,2)
+        
+        call flux1(q1dp,g,g%dq1d,auxp,dt,cfl1d,t,rp,tfluct,2)
         cfl = dmax1(cfl,cfl1d)
 
         if (mcapa.eq.0) then
@@ -119,6 +124,6 @@ subroutine flux2(q,g,dq,aux,dt,cfl,t,rp,tfluct)
             dq(i,:,:) = dq(i,:,:)+g%dq1d
         endif
     enddo !end y sweeps
-    stop
+    !stop
 
 end subroutine flux2

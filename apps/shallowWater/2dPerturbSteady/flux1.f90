@@ -64,13 +64,13 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
     if (ndim.gt.1) dq1d=0.d0
     
     
-    do i=1-mbc,mx+mbc
-    	q1d(i,1) = q1d(i,1) + aux(i,1)
-    	if (tmp .lt. 1.d0) then
-    		write(*,*) i, q1d(i,1)
-    		!stop
-    	endif
-    enddo 
+    !do i=1-mbc,mx+mbc
+    !	q1d(i,1) = q1d(i,1) + aux(i,1)
+    !	if (tmp .lt. 1.d0) then
+    !		write(*,*) i, q1d(i,1)
+    !		!stop
+    !	endif
+    !enddo 
     
 
 
@@ -106,12 +106,18 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
         select case (char_decomp)
             case (0)
                 ! no characteristic decomposition
-                !do i=1,mx+1
-            	!	q1d(i,1) = q1d(i,1) + aux(i,1)
-        		!enddo
-        		
- 		
+                do i=1-mbc,mx+mbc
+            		q1d(i,1) = q1d(i,1) + aux(i,1)
+        		enddo
+        				
                 call weno5(q1d,g%ql,g%qr)
+                
+                do i=1-mbc,mx+mbc
+            		q1d(i,1) = q1d(i,1) - aux(i,1)
+            		g%ql(i,1) = g%ql(i,1) - aux(i,1)
+            		g%qr(i,1) = g%qr(i,1) - aux(i,1)
+        		enddo
+                
             case (1)
                 ! wave-based reconstruction
                 call rp(ixy,maxnx,meqn,mwaves,mbc,mx,&

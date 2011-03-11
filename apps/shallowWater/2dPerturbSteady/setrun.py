@@ -36,7 +36,7 @@ def setrun(claw_pkg='sharpclaw'):
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
     probdata.add_param('grav',      9.81,        'Gravitational constant')
-    probdata.add_param('eps',       0.00,        'Perturbation')
+    probdata.add_param('eps',       0.01,        'Perturbation')
  
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -97,8 +97,8 @@ def setrun(claw_pkg='sharpclaw'):
 
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
-        clawdata.nout = 10
-        clawdata.tfinal = 0.12
+        clawdata.nout = 20
+        clawdata.tfinal = 0.6
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.  
