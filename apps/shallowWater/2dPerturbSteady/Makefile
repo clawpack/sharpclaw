@@ -44,7 +44,8 @@ CLAW_SOURCES = \
   bc2.f90\
   out2-PertSW.f90 \
   flux1.f90 \
-  flux2.f90
+  flux2.f90 \
+  reconstruct.f90 \
 
 # Clawpack library to be used:
 CLAW_LIB = $(SCLAW)/lib
@@ -53,7 +54,6 @@ CLAW_LIBSOURCES = \
   $(CLAW_LIB)/2d/Global2.f90 \
   $(CLAW_LIB)/ClawData.f90 \
   $(CLAW_LIB)/ClawParams.f90 \
-  $(CLAW_LIB)/reconstruct.f90 \
   $(CLAW_LIB)/reconstructmd.f90 \
   $(CLAW_LIB)/main.f90 \
   $(CLAW_LIB)/sharpclaw.f90 \
