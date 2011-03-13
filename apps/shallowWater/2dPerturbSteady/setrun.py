@@ -36,7 +36,7 @@ def setrun(claw_pkg='sharpclaw'):
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
 
     probdata.add_param('grav',      9.81,        'Gravitational constant')
-    probdata.add_param('eps',       0.00,        'Perturbation')
+    probdata.add_param('eps',       0.01,        'Perturbation')
  
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -60,8 +60,8 @@ def setrun(claw_pkg='sharpclaw'):
         
 
     # Number of grid cells:
-    clawdata.mx = 200
-    clawdata.my = 100
+    clawdata.mx = 400
+    clawdata.my = 200
 
     # ---------------
     # Size of system:
@@ -141,8 +141,8 @@ def setrun(claw_pkg='sharpclaw'):
     
     # Desired Courant number if variable dt used, and max to allow without 
     # retaking step with a smaller dt:
-    clawdata.cfl_desired = 0.5
-    clawdata.cfl_max = 0.6
+    clawdata.cfl_desired = 0.2
+    clawdata.cfl_max = 0.35
     
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 5000

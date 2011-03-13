@@ -119,6 +119,8 @@
 		s(i,2) = (uhat*n_1 + vhat*n_2)
 		s(i,3) = (uhat*n_1 + vhat*n_2) + chat
 		
+		!write(*,*) i,s(i,1),s(i,2),s(i,3)
+		
 		! # Right eigenvectors (columns)
 		R(1,1) = 1.d0
 		R(2,1) = uhat - chat*n_1
@@ -168,9 +170,9 @@
 			amdq(i,j) = 0.d0
 			apdq(i,j) = 0.d0
 			do k=1,meqn
-				if (s(i,k) .lt. 1.0e-10) then
+				if (s(i,k) .lt. 1.0e-14) then
 					amdq(i,j) = amdq(i,j) + fwave(i,j,k)
-				elseif (s(i,k) .gt. 1.0e-10) then
+				elseif (s(i,k) .gt. 1.0e-14) then
 					apdq(i,j) = apdq(i,j) + fwave(i,j,k)
 				else
 					amdq(i,j) = amdq(i,j) + 1.d0/2.d0*fwave(i,j,k)

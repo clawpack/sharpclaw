@@ -453,16 +453,13 @@ contains
       do i =1,mx2
       	do mw = 1,mwaves
       		do m = 1,meqn
-      			write(*,*) s(i,mw)
-      			if (abs(s(i,mw)) .lt. 1.0e-15) then
-      				if (s(i,mw) .lt. 0.d0) then
-      					s(i,mw) = -1.0e-14
-      				else
-      					s(i,mw) = 1.0e-14
-      				endif
-      			endif
-          		fwave(i,m,mw)=fwave(i,m,mw)/s(i,mw)
-          		!write(*,*) fwave(i,m,mw)
+      			!write(*,*) s(i,mw)
+      			if (abs(s(i,mw)) .lt. 1.0e-14) then
+      				fwave(i,m,mw) = 0.d0
+      			else
+          			fwave(i,m,mw)=fwave(i,m,mw)/s(i,mw)
+          		endif
+          		!write(*,*) 'This is an f-wave:', fwave(i,m,mw)
           	enddo
         enddo
       enddo
