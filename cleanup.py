@@ -1,4 +1,4 @@
-#
+ #
 # cleanup script for claw
 #
 

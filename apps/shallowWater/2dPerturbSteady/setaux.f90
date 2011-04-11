@@ -27,16 +27,13 @@
     double precision :: aux(1-mbc:mx(1)+mbc,1-mbc:mx(2)+mbc, maux)
     
     integer :: i, j
-    double precision :: xCell, yCell, xInter, yInter
+    double precision :: xCell, yCell
 	
     do i=1-mbc,mx(1)+mbc
 	xCell = xlower(1) + (i-0.5d0)*dx(1)
-	xInter = xlower(1) + (i-1.0d0)*dx(1)
         do j=1-mbc,mx(2)+mbc
     	    yCell = xlower(2) + (j-0.5d0)*dx(2)
-    	    yInter = xlower(2) + (j-1.0d0)*dx(2)
     	    aux(i,j,1) = 0.8d0*dexp(-5.d0*(xCell-0.9d0)**2-50.d0*(yCell-0.5d0)**2)
-    	    aux(i,j,2) = 0.8d0*dexp(-5.d0*(xInter-0.9d0)**2-50.d0*(yInter-0.5d0)**2)
     	enddo
     enddo
     

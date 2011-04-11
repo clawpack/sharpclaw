@@ -450,9 +450,24 @@ contains
       ! convert fwaves to waves by dividing by the sound speed
       ! We do this in place to save memory
       ! and get away with it because the waves are never used again
-      forall(i=1:mx2,mw=1:mwaves,m=1:meqn)
-          fwave(i,m,mw)=fwave(i,m,mw)/s(i,mw)
-      end forall
+      do i =1,mx2
+      	do mw = 1,mwaves
+      		do m = 1,meqn
+      			!write(*,*) s(i,mw)
+      			if (abs(s(i,mw)) .lt. 1.0e-14) then
+      				fwave(i,m,mw) = 0.d0
+      			else
+          			fwave(i,m,mw)=fwave(i,m,mw)/s(i,mw)
+          		endif
+          		!write(*,*) 'This is an f-wave:', fwave(i,m,mw)
+          	enddo
+        enddo
+      enddo
+
+      
+      !forall(i=1:mx2,mw=1:mwaves,m=1:meqn)
+      !    fwave(i,m,mw)=fwave(i,m,mw)/s(i,mw)
+      !end forall
 
       ! loop over interfaces (i-1/2)
       do i=2,mx2

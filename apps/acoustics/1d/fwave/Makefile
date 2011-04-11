@@ -2,12 +2,11 @@
 # Makefile for Clawpack code in this directory.
 # This version only sets the local files and frequently changed
 # options, and then includes the standard makefile pointed to by CLAWMAKE.
-SCLAWMAKE = $(SCLAW)/util/Makefile.common
+CLAWMAKE = $(CLAW)/util/Makefile.common
 
 # See the above file for details and a list of make options, or type
 #   make .help
 # at the unix prompt.
-
 
 # Adjust these variables if desired:
 # ----------------------------------
@@ -22,12 +21,7 @@ CLAW_PLOTDIR = _plots               # Directory for plots
 # Environment variable FC should be set to fortran compiler, e.g. gfortran
 FC ?= gfortran   # default if not set as environment variable
 # Add any desired compiler flags such as -g here:
-FFLAGS =
-
-#---------------------------------------------------------------------------
-# Set path to the correct library which might be used by the user-functions
-#---------------------------------------------------------------------------
-CLAW_LIBDIMENSION = /2d
+FFLAGS = -O3
 
 
 # ---------------------------------
@@ -36,42 +30,38 @@ CLAW_LIBDIMENSION = /2d
 
     
 CLAW_SOURCES = \
-  qinit.f90 \
-  setprob.f90 \
+  qinit.f \
+  rp1acfw.f \
+  tfluct1.f \
   setaux.f90 \
-  rpf-wave.f90 \
-  tfluctf-wave.f90\
-  bc2.f90\
-  out2-PertSW.f90 \
-  flux1.f90 \
-  flux2.f90 \
-  reconstruct.f90 \
+  out1nel.f \
+  evec.f \
+  setprob.f 
+
 
 # Clawpack library to be used:
 CLAW_LIB = $(SCLAW)/lib
     
 CLAW_LIBSOURCES = \
-  $(CLAW_LIB)/2d/Global2.f90 \
+  $(CLAW_LIB)/1d/Global1.f90 \
   $(CLAW_LIB)/ClawData.f90 \
   $(CLAW_LIB)/ClawParams.f90 \
+  $(CLAW_LIB)/reconstruct.f90 \
   $(CLAW_LIB)/reconstructmd.f90 \
   $(CLAW_LIB)/main.f90 \
   $(CLAW_LIB)/sharpclaw.f90 \
-  $(CLAW_LIB)/2d/qalloc2.f90 \
-  $(CLAW_LIB)/2d/step2d.f90 \
-  $(CLAW_LIB)/2d/flux2md.f90 \
+  $(CLAW_LIB)/1d/qalloc1.f90 \
+  $(CLAW_LIB)/1d/step1d.f90 \
+  $(CLAW_LIB)/flux1.f90 \
   $(CLAW_LIB)/polyrecon.f90 \
+  $(CLAW_LIB)/1d/src1.f90 \
+  $(CLAW_LIB)/1d/bc1.f90 \
   $(CLAW_LIB)/b4step.f90 \
-  $(CLAW_LIB)/evec.f90 \
-  $(CLAW_LIB)/opendatafile.f \
-  $(CLAW_LIB)/2d/src2.f90 \
-  #$(CLAW_LIB)/2d/bc2.f \
-  #$(CLAW_LIB)/tfluct.f90 \
- 
- 
+  $(CLAW_LIB)/opendatafile.f
+
 #-------------------------------------------------------------------
 # Include Makefile containing standard definitions and make options:
-include $(SCLAWMAKE)
+include $(CLAWMAKE)
 
 
 ### DO NOT remove this line - make depends on it ###

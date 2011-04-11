@@ -43,7 +43,7 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
 
     type(griddat) g
 
-    double precision :: q1d(1-mbc:nx(ixy)+mbc, meqn)
+    double precision :: q1d(1-mbc:nx(ixy)+mbc, meqn) !qSliceHelp(1-mbc:nx(2)+mbc, meqn)
     dimension    dq1d(1-mbc:maxnx+mbc, meqn)
     double precision, target :: aux(1-mbc:nx(ixy)+mbc, maux)
     double precision :: auxl(1-mbc:nx(ixy)+mbc, maux), auxr(1-mbc:nx(ixy)+mbc, maux)
@@ -51,6 +51,8 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
     integer, intent(in) :: ixy
     integer mx,t
     double precision, pointer :: auxpl(:,:), auxpr(:,:)
+    
+    double precision :: tmp
 
     mx=nx(ixy)
 
@@ -61,10 +63,16 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
     endif
     if (ndim.gt.1) dq1d=0.d0
     
-    do i = 1-mbc+1,mx+mbc
-    	q1d(i,1) = q1d(i,1) + aux(i,1)
-    enddo
     
+    !do i=1-mbc,mx+mbc
+    !	q1d(i,1) = q1d(i,1) + aux(i,1)
+    !	if (tmp .lt. 1.d0) then
+    !		write(*,*) i, q1d(i,1)
+    !		!stop
+    !	endif
+    !enddo 
+    
+
 
 
     select case(lim_type)
@@ -98,20 +106,24 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
         select case (char_decomp)
             case (0)
                 ! no characteristic decomposition
+                do i=1-mbc,mx+mbc
+            		q1d(i,1) = q1d(i,1) + aux(i,1)
+        		enddo
+        				
                 call weno5(q1d,g%ql,g%qr)
                 
-                !write(*,*) 'I AM HERE'
-                do i = 1-mbc+1,mx+mbc
-                	q1d(i,1) = q1d(i,1) - aux(i,1) 
-   					g%ql(i,1) = g%ql(i,1) - aux(i,2)
-   					g%qr(i,1) = g%qr(i,1) - aux(i,2)
-    			enddo
-    				
+                do i=1-mbc,mx+mbc
+            		q1d(i,1) = q1d(i,1) - aux(i,1)
+            		g%ql(i,1) = g%ql(i,1) - aux(i,1)
+            		g%qr(i,1) = g%qr(i,1) - aux(i,1)
+        		enddo
+                
             case (1)
                 ! wave-based reconstruction
                 call rp(ixy,maxnx,meqn,mwaves,mbc,mx,&
                         q1d,q1d,aux,aux,g%wave,g%s,g%amdq,g%apdq)
-                call weno5_wave(q1d,g%ql,g%qr,g%wave)
+                !call weno5_wave(q1d,g%ql,g%qr,g%wave)
+                call weno5_fwave(q1d,g%ql,g%qr,g%wave,g%s)
             case (2)
                 ! characteristic-wise reconstruction
                 call evec(mx,meqn,mbc,mx,q1d,aux,aux,g%evl,g%evr)
@@ -127,7 +139,6 @@ subroutine flux1(q1d,g,dq1d,aux,dt,cfl,t,rp,tfluct,ixy)
                 stop
         end select
       end select
-      
 
 
     ! solve Riemann problem at each interface 
