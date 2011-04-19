@@ -45,7 +45,7 @@ CLAW_SOURCES = \
   src2.f90
 
 # Clawpack library to be used:
-CLAW_LIB = $(SCLAW)/lib
+CLAW_LIB = $(SCLAW)/src
     
 CLAW_LIBSOURCES = \
   $(CLAW_LIB)/2d/Global2.f90 \
