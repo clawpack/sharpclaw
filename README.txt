@@ -1,3 +1,7 @@
+# Note
+
+This code is no longer supported.  To use SharpClaw, please install Clawpack 5.0, following [these instructions](http://clawpack.github.io/doc/installing.html).
+
 c
 c  =============================================================================
 c  SharpClaw -- Semi-discrete High order Accurate Package for Conservation LAWs
